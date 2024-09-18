@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video SEO Optimizer</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .result {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center">YouTube Video SEO Optimizer</h1>
+        <p class="text-center">Upload a video file to get SEO suggestions, summary, keywords, hashtags, and more.</p>
+        
+        <form action="/process_video" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="video">Upload Video (MP4):</label>
+                <input type="file" class="form-control-file" id="video" name="video" accept=".mp4" required>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Process Video</button>
+        </form>
+        
+        <div id="result" class="result">
+            <!-- Result will be displayed here -->
+        </div>
+    </div>
+
+    <script>
+        document.querySelector('form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            var formData = new FormData(this);
+
+            fetch('/process_video', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                var resultDiv = document.getElementById('result');
+                resultDiv.innerHTML = '';
+
+                if (data.error) {
+                    resultDiv.innerHTML = `<div class="alert alert-danger">${data.error}</div>`;
+                } else {
+                    resultDiv.innerHTML = `
+                        <h3>Summary:</h3>
+                        <p>${data.summary}</p>
+                    `;
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                var resultDiv = document.getElementById('result');
+                resultDiv.innerHTML = `<div class="alert alert-danger">An error occurred while processing the video.</div>`;
+            });
+        });
+    </script>
+</body>
+</html>
