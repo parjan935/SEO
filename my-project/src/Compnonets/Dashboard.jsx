@@ -8,21 +8,23 @@ import Navbar from "./Navbar";
 import Footer from "./Footer";
 
 function Dashboard() {
-  const [login,setlogin]=useState(true);
-
+  // localStorage.removeItem('Token');
+  // localStorage.removeItem('userDetails');
+  const token = localStorage.getItem('Token');
   const navigate = useNavigate();
   const navtotry = () => {
-    if(login){
+    if(token){
       navigate("/main");
     }
     else{
       alert("Please Login to Access it..")
+      navigate("/signin")
     }
   };
   return (
     <div className="flex flex-col h-screen bg-darkNavy">
       <Navbar />
-      <div className="flex flex-grow">
+      <div className="flex-grow flex">
         <div className="bg-darkNavy flex flex-row h-fit pt-8">
           <div className="flex flex-col pl-5 space-y-4 w-fit lg:w-3/4 xl:w-9/12" >
             <div className="text-yellow-400 text-lg ml-8">SEO optimizer</div>
@@ -42,8 +44,8 @@ function Dashboard() {
             <div className="mx-auto">
               <div
                 onClick={navtotry}
-                className=" mt-0 px-10 py-2 my-9 h-fit w-fit bg-xoraTeal text-center text-4xl font-medium ease-in-out duration-500 hover:scale-110  hover:opacity-80 rounded-lg cursor-pointer">
-                Try it ...
+                className=" mt-0 px-10 py-2 my-9 h-fit w-fit bg-xoraTeal text-center text-4xl font-medium hover:opacity-80 rounded-lg cursor-pointer">
+                Try it
               </div>
             </div>
           </div>

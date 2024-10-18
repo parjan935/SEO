@@ -13,7 +13,7 @@ const Main = () => {
   const [isDisable, setIsDisable] = useState(false);
 
   const handleFileChange = (e) => setVideoFile(e.target.files[0]);
-
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -41,6 +41,7 @@ const Main = () => {
       } else {
         setStatus(`Video processing failed: ${await response.text()}`);
       }
+      setVideoFile(null)
     } catch (error) {
       setStatus("An error occurred during the video processing.");
     }
@@ -98,7 +99,7 @@ const Main = () => {
           " "
         )}
         {(!process && status!="") ? <h1 className="text-white m-5 text-2xl">
-          <i className="fa-solid fa-circle-check pr-3"></i>
+          {/* <i className="fa-solid fa-circle-check pr-3"></i> */}
           {status}
         </h1> : ""}
 

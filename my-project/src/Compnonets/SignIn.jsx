@@ -7,12 +7,67 @@ function SignIn() {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Form submitted:", { userName, password });
-    setUserName("");
-    setPassword("");
+  
+  const getUser = async () => {
+    try {
+      const token = localStorage.getItem("Token");
+      if (!token) {
+        throw new Error("No token found");
+      }
+
+      const response =  await fetch("http://localhost:3000/user/profile", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`
+        }
+      });
+      if (!response.ok) {
+        throw new Error(`Error! status: ${response.status}`); 
+      }
+      
+      const data = await response.json();
+      console.log(data.user)
+      // localStorage.setItem('userDetails', JSON.stringify(data.user));
+    } catch (err) {
+      console.log("Error fetching users:", err);
+    }
   };
+
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const data = {
+        userName,
+        password,
+    };
+
+    try {
+        const response = await fetch('http://localhost:3000/user/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+        console.log(response)
+        const result = await response.json();
+        console.log(result)
+        if (response.ok) {
+          localStorage.setItem('Token', result.token);
+          getUser();
+          alert('Login successfully!');
+          navigate("/");
+        } else {
+            alert(result.error);
+        }
+    }
+    catch(err){
+      console.log(err)
+    }
+
+  }
 
   const navigate = useNavigate();
   const signup = () => {
@@ -21,11 +76,11 @@ function SignIn() {
 
   return (
     <div>
-      <Navbar option="signin"/>
-      <div className="bg-darkNavy h-screen pt-56 pb-12 flex items-center justify-center flex-grow">
+      <Navbar option="signin" />
+      <div className="flex bg-darkNavy h-screen pt-20 items-center justify-center flex-grow">
         <div className="w-[500px] bg-navy2 p-8 text-white">
           <form
-            className="flex flex-col  shadow-slate-800 shadow-[0px_0px_240px_rgba(1,1,1,100)] bg-navy2 p-4 rounded-2xl space-y-5 py-8 px-8 md:-mt-20"
+            className="flex flex-col shadow-slate-800 shadow-[0px_0px_240px_rgba(1,1,1,100)] bg-navy2 p-4 rounded-2xl space-y-5 py-8 px-8 md:-mt-20"
             onSubmit={handleSubmit}
           >
             <h1 className="text-5xl text-white  font-bold text-center">
@@ -39,7 +94,9 @@ function SignIn() {
                 type="text"
                 id="name"
                 value={userName}
-                onChange={(e)=>{setUserName(e.target.value)}}
+                onChange={(e) => {
+                  setUserName(e.target.value);
+                }}
                 className="p-2 border border-gray-300 rounded-md text-black"
                 required
               />
@@ -55,7 +112,9 @@ function SignIn() {
               <input
                 type="password"
                 value={password}
-                onChange={(e)=>{setPassword(e.target.value)}}
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                }}
                 className="p-2 border border-gray-300 rounded-md outline-none text-black"
                 required
               />

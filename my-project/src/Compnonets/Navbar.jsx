@@ -53,18 +53,20 @@ const Navbar = ({ option }) => {
             </Link>
           </ul>
         </div>
-        {/* <Link to="/profile">
-          <i className="fa-solid fa-user bg-white p-2 rounded-full hover:bg-gray-300"></i>
-        </Link> */}
+        {localStorage.getItem('Token')!=null ? 
+        <Link to="/profile">
+          <i className="fa-solid fa-user fa-2xl bg-white p-5 px-2 rounded-full hover:bg-gray-300 mr-5"></i>
+        </Link> :
         <Link to={option == "signin" ? "/signup" : "/signin"}>
           <div className=" text-white bg-blue-800 rounded-lg px-4 py-1 pb-2 font-medium 
           text-2xl mx-7 hover:bg-blue-500">
             {option == "signin" ? "Sign up" : "Sign in"}
           </div>
         </Link>
+          }
       </nav>
       {/* menu */}
-      <div className={`${menu ? `max-h-[1000px]` : `max-h-0`} ${menu || (option=="signin" || option=="signup") ? "mt-0":"mt-20" }  overflow-hidden bg-gray-500  duration-1000 ease-in-out`}>
+      <div className={` ${menu ? "mt-20" :"mt-0"} ${menu ? `max-h-[1000px]` : `max-h-0`} ${menu || (option=="signin" || option=="signup") ? "mt-0":"mt-20" }  overflow-hidden bg-gray-500  duration-1000 ease-in-out`}>
         <Link to="/">
           <div className="text-white text-xl font-medium pl-10 py-1 hover:bg-gray-400 ">
             Home
