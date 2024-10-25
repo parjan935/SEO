@@ -12,7 +12,7 @@ const Profile = () => {
   useEffect(() => {
 
     if (!token) {
-      setError("User not authenticated. Please log in.");
+      // setError("User not authenticated. Please log in.");
       return;
     }
     const fetchUserDetails = async () => {

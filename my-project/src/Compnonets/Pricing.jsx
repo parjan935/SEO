@@ -12,8 +12,8 @@ function Pricing() {
           className="flex flex-col text-white h-[450px] w-[300px] rounded-lg text-2xl bg-blue-500 hover:scale-110 
         duration-500 ease-in-out z-0 lg:z-20 p-5 px-7"
         >
-          <h1 className="text-5xl w-fit m-auto">General</h1>
-          <h1 className="text-5xl w-fit m-auto">Plan</h1>
+          <h1 className="text-5xl w-fit m-auto">Base Plan</h1>
+          {/* <h1 className="text-5xl w-fit m-auto">Plan</h1> */}
           <div className="flex flex-col flex-grow space-y-6 py-10">
             <div className="flex space-x-2 ">
               <i className="fa-solid fa-check my-2"></i>
@@ -23,10 +23,6 @@ function Pricing() {
               <i className="fa-solid fa-check my-2"></i>
               <span>Fast response</span>
             </div>
-            {/* <div className="flex space-x-2 pl-5">
-              <i className="fa-solid fa-check"></i>
-              <span>More accurate</span>
-            </div> */}
           </div>
           <div className="text-center mb-10">
             <button
