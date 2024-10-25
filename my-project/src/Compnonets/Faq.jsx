@@ -8,7 +8,7 @@ const Faq = () => {
     {
       question: "What is an SEO optimizer?",
       answer:
-        "An SEO optimizer is a tool or software that helps improve the visibility of a website on search engines by analyzing content, structure, and performance to ensure it meets search engine ranking criteria.",
+        "An SEO optimizer is a tool or software that helps improve the visibility of a website on search engines by analyzing content, structure, and performance to ensure it meets search engine ranking criteria. An SEO optimizer is a tool or software that helps improve the visibility of a website on search engines by analyzing content, structure, and performance to ensure it meets search engine ranking criteria. An SEO optimizer is a tool or software that helps improve the visibility of a website on search engines by analyzing content, structure, and performance to ensure it meets search engine ranking criteria. An SEO optimizer is a tool or software that helps improve the visibility of a website on search engines by analyzing content, structure, and performance to ensure it meets search engine ranking criteria. An SEO optimizer is a tool or software that helps improve the visibility of a website on search engines by analyzing content, structure, and performance to ensure it meets search engine ranking criteria. ",
     },
     {
       question: "How does an SEO optimizer improve website ranking?",
