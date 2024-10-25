@@ -1,4 +1,5 @@
 import React from 'react'
+import './logo.css'
 
 const Footer = () => {
   return (
@@ -10,7 +11,7 @@ const Footer = () => {
               href="https://facebook.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-400 hover:text-white"
+              className="text-gray-400 hover:text-blue-500 duration-500 ease-in-out"
             >
               <i className="fab fa-facebook-f fa-2x"></i>
             </a>
@@ -18,7 +19,7 @@ const Footer = () => {
               href="https://instagram.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-400 hover:text-white"
+              className=" text-gray-400  hover:text-rose-500 duration-500 ease-in-out"
             >
               <i className="fab fa-instagram fa-2x"></i>
             </a>
@@ -26,7 +27,7 @@ const Footer = () => {
               href="https://linkedin.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-400 hover:text-white"
+              className="text-gray-400  hover:text-blue-600 duration-500 ease-in-out"
             >
               <i className="fab fa-linkedin-in fa-2x"></i>
             </a>

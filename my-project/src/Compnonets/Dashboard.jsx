@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import logo from "../assets/SEO_logo.jpg";
-import mainimg from "../assets/SEO main image.webp";
+import mainimg from "../assets/LOGO2.jpg";
 import { Link } from "react-router-dom";
 
 import { useNavigate } from "react-router-dom";
@@ -54,7 +54,7 @@ function Dashboard() {
             <div className="shadow-lg"></div>
             <img
               src={mainimg}
-              className="w-2/5 absolute right-[0px] top-40 h-[450px] bg-no-repeat bg-cover "
+              className="w-2/5 absolute right-[15px] top-24 h-[450px] bg-no-repeat bg-cover "
             />
           </div>
         </div>

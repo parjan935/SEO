@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import logo from "../assets/SEO_logo.jpg";
+import logo from "../assets/LOGO.jpg";
+// import logo from "../assets/SEO_logo.jpg";
 import SignIn from "./SignIn";
 
 const Navbar = ({ option }) => {
