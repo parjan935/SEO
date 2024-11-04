@@ -8,7 +8,6 @@ import Faq from "./Compnonets/Faq";
 import Features from "./Compnonets/Features";
 import Copy from "./Compnonets/Copy";
 import Profile from "./Compnonets/Profile";
-import Sample from "./Compnonets/QandA";
 
 export default function App() {
   return (
@@ -19,7 +18,7 @@ export default function App() {
           <Route path="/profile" element={<Profile />}></Route>
           <Route path="/signup" element={<SignUp />}></Route>
           <Route path="/signin" element={<SignIn />}></Route>
-          <Route path="/price" element={<Pricing />}></Route>
+          <Route path="/pricing" element={<Pricing />}></Route>
           <Route path="/faq" element={<Faq />}></Route>
           <Route path="/features" element={<Features />}></Route>
           <Route path="/main" element={<Main />}></Route>

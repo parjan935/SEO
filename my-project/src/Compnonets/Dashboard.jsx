@@ -7,6 +7,10 @@ import { useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+
 const TOKEN_EXPIRY_TIME = 60 * 60 * 1000;
 
 function Dashboard() {
@@ -16,8 +20,12 @@ function Dashboard() {
     if (token) {
       navigate("/main");
     } else {
-      alert("Please Login to Access it..\nLogin now ");
-      navigate("/signin");
+      // alert("Please Login to Access it..\nLogin now ");
+      toast.success("Please Login to Access it..\nLogin now ", {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 1000,
+      });
+      // navigate("/signin");
     }
   };
 
@@ -93,6 +101,7 @@ function Dashboard() {
         </div>
         <Footer />
       </div>
+      <ToastContainer />
     </>
   );
 }
