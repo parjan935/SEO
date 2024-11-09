@@ -7,11 +7,7 @@ import { useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-
-
-const TOKEN_EXPIRY_TIME = 60 * 60 * 1000;
+// const TOKEN_EXPIRY_TIME = 60 * 60 * 1000;
 
 function Dashboard() {
   const token = localStorage.getItem("Token");
@@ -19,45 +15,41 @@ function Dashboard() {
   const navtotry = () => {
     if (token) {
       navigate("/main");
-    } else {
-      // alert("Please Login to Access it..\nLogin now ");
-      toast.success("Please Login to Access it..\nLogin now ", {
-        position: toast.POSITION.TOP_CENTER,
-        autoClose: 1000,
-      });
-      // navigate("/signin");
+    }else{
+      alert("Please Login to access it.")
+      navigate("/signin");
     }
   };
 
-  useEffect(() => {
-    let inactivityTimer;
+  // useEffect(() => {
+  //   let inactivityTimer;
 
-    const removeToken = () => {
-      localStorage.removeItem("token");
-      console.log("Token removed due to inactivity.");
-    };
+  //   const removeToken = () => {
+  //     localStorage.removeItem("token");
+  //     console.log("Session Timeout.");
+  //   };
 
-    const resetInactivityTimer = () => {
-      clearTimeout(inactivityTimer);
-      inactivityTimer = setTimeout(() => {
-        removeToken();
-      }, TOKEN_EXPIRY_TIME);
-    };
+  //   const resetInactivityTimer = () => {
+  //     clearTimeout(inactivityTimer);
+  //     inactivityTimer = setTimeout(() => {
+  //       removeToken();
+  //     }, TOKEN_EXPIRY_TIME);
+  //   };
 
-    const activityEvents = ["mousemove", "keypress", "scroll", "click"];
-    activityEvents.forEach((event) =>
-      window.addEventListener(event, resetInactivityTimer)
-    );
+  //   const activityEvents = ["mousemove", "keypress", "scroll", "click"];
+  //   activityEvents.forEach((event) =>
+  //     window.addEventListener(event, resetInactivityTimer)
+  //   );
 
-    resetInactivityTimer();
+  //   resetInactivityTimer();
 
-    return () => {
-      clearTimeout(inactivityTimer);
-      activityEvents.forEach((event) =>
-        window.removeEventListener(event, resetInactivityTimer)
-      );
-    };
-  }, []);
+  //   return () => {
+  //     clearTimeout(inactivityTimer);
+  //     activityEvents.forEach((event) =>
+  //       window.removeEventListener(event, resetInactivityTimer)
+  //     );
+  //   };
+  // }, []);
 
   return (
     <>
@@ -101,7 +93,6 @@ function Dashboard() {
         </div>
         <Footer />
       </div>
-      <ToastContainer />
     </>
   );
 }

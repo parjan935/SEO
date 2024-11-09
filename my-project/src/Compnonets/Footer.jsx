@@ -19,7 +19,7 @@ const Footer = () => {
               href="https://instagram.com"
               target="_blank"
               rel="noopener noreferrer"
-              className=" text-gray-400  hover:text-rose-500 duration-500 ease-in-out"
+              className=" text-gray-400  hover:text-rose-400 duration-500 ease-in-out"
             >
               <i className="fab fa-instagram fa-2x"></i>
             </a>
