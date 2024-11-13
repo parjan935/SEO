@@ -4,7 +4,9 @@ const nodemailer = require('nodemailer');
 const User = require("../models/user");
 const { jwtMiddleware, gToken } = require("../jwt");
 
+
 require('dotenv').config();  
+
 
 router.post("/signup", async (req, res) => {
   try {
