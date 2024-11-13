@@ -7,7 +7,6 @@ import { useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 
-// const TOKEN_EXPIRY_TIME = 60 * 60 * 1000;
 
 function Dashboard() {
   const token = localStorage.getItem("Token");
@@ -21,35 +20,6 @@ function Dashboard() {
     }
   };
 
-  // useEffect(() => {
-  //   let inactivityTimer;
-
-  //   const removeToken = () => {
-  //     localStorage.removeItem("token");
-  //     console.log("Session Timeout.");
-  //   };
-
-  //   const resetInactivityTimer = () => {
-  //     clearTimeout(inactivityTimer);
-  //     inactivityTimer = setTimeout(() => {
-  //       removeToken();
-  //     }, TOKEN_EXPIRY_TIME);
-  //   };
-
-  //   const activityEvents = ["mousemove", "keypress", "scroll", "click"];
-  //   activityEvents.forEach((event) =>
-  //     window.addEventListener(event, resetInactivityTimer)
-  //   );
-
-  //   resetInactivityTimer();
-
-  //   return () => {
-  //     clearTimeout(inactivityTimer);
-  //     activityEvents.forEach((event) =>
-  //       window.removeEventListener(event, resetInactivityTimer)
-  //     );
-  //   };
-  // }, []);
 
   return (
     <>

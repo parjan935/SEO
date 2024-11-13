@@ -3,6 +3,11 @@ import { useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+
+
 function SignIn() {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
@@ -13,6 +18,8 @@ function SignIn() {
   const [userOtp, setUserOtp] = useState("");
   const [verification, setVerfication] = useState(false);
   const [checkOtp, setCheckOtp] = useState("");
+
+  const notifyLogin = (e) => toast.success(e);
 
   const navigate = useNavigate();
 
@@ -66,11 +73,13 @@ function SignIn() {
       console.log(result);
 
       if (response.ok) {
+        notifyLogin("Registration Successfull!");
         setMessage("User registered successfully!");
         localStorage.setItem("Token", result.token);
         getUser();
-        alert("User registered successfully!");
-        navigate("/");
+        setTimeout(() => {
+          navigate("/");
+        }, 1000);
       } else {
         setMessage(result.error);
         alert(result.error);
@@ -168,6 +177,7 @@ function SignIn() {
           </form>
         </div>
       </div>
+      <ToastContainer  position="top-center" autoClose={1000} limit={3} />
     </div>
   );
 }

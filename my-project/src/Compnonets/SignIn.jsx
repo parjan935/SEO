@@ -3,10 +3,14 @@ import { useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 function SignIn() {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
-
+  
+  const notifyLogin = (e) => toast.success(e);
   
   const getUser = async () => {
     try {
@@ -28,7 +32,6 @@ function SignIn() {
       
       const data = await response.json();
       console.log(data.user)
-      // localStorage.setItem('userDetails', JSON.stringify(data.user));
     } catch (err) {
       console.log("Error fetching users:", err);
     }
@@ -55,10 +58,12 @@ function SignIn() {
         const result = await response.json();
         console.log(result)
         if (response.ok) {
+          notifyLogin("Login Successfull!");
           localStorage.setItem('Token', result.token);
           getUser();
-          alert('Login successfully!');
-          navigate("/");
+          setTimeout(() => {
+            navigate("/");
+          }, 1000);
         } else {
             alert(result.error);
         }
@@ -135,7 +140,7 @@ function SignIn() {
           </form>
         </div>
       </div>
-      {/* <Footer/> */}
+      <ToastContainer  position="top-center" autoClose={1000} limit={3} />
     </div>
   );
 }
