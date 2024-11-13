@@ -7,6 +7,8 @@ mongoose.connect(mongURL_local, {
 
 });
 
+
+
 const db=mongoose.connection;
 db.on('connected',()=>{
     console.log("server got connected");
