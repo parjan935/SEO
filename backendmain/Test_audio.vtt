@@ -1,5 +1,0 @@
-WEBVTT
-
-00:00.000 --> 00:07.000
-Internally, the transcribe method reads the entire file and process the audio with a sliding 30 second window.
-

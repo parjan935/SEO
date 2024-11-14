@@ -1,1 +1,0 @@
-Internally, the transcribe method reads the entire file and process the audio with a sliding 30 second window.
