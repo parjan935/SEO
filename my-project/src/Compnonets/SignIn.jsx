@@ -69,7 +69,7 @@ function SignIn() {
           setPassword("")
           getUser();
           setTimeout(() => {
-            navigate("/user");
+            navigate("/");
           }, 1000);
         } else {
             setMessage(result.error)

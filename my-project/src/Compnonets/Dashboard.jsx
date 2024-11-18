@@ -7,6 +7,8 @@ import { useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function Dashboard() {
   const token = localStorage.getItem("Token");
@@ -18,11 +20,11 @@ function Dashboard() {
     if (token) {
       navigate("/main");
     }else{
-      setwarn(true);
-      setTimeout(()=>{
-        setwarn(false)
-      },5000)
-      // navigate("/signin");
+      // setwarn(true);
+      // setTimeout(()=>{
+      //   setwarn(false)
+      // },5000)
+      toast.warning("Please Login to access it...")
     }
   };
 
@@ -55,7 +57,7 @@ function Dashboard() {
                 >
                   Try it
                 </div>
-                <p className={`text-red-500 ${warn?"mb-1":"hidden"}`}>Please Login to access it......</p>
+                {/* <p className={`text-red-500 ${warn?"mb-1":"hidden"}`}>Please Login to access it......</p> */}
               </div>
             </div>
             {/* Dashboard Image */}
@@ -70,6 +72,7 @@ function Dashboard() {
         </div>
         <Footer />
       </div>
+      <ToastContainer  position="top-center" autoClose={1000} limit={3} />
     </>
   );
 }
