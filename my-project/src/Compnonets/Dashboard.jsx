@@ -10,13 +10,19 @@ import Footer from "./Footer";
 
 function Dashboard() {
   const token = localStorage.getItem("Token");
+
+  const [warn,setwarn]=useState(false)
   const navigate = useNavigate();
+
   const navtotry = () => {
     if (token) {
       navigate("/main");
     }else{
-      alert("Please Login to access it.")
-      navigate("/signin");
+      setwarn(true);
+      setTimeout(()=>{
+        setwarn(false)
+      },5000)
+      // navigate("/signin");
     }
   };
 
@@ -24,7 +30,7 @@ function Dashboard() {
   return (
     <>
       <Navbar />
-      <div className="flex flex-col h-full bg-darkNavy">
+      <div className="flex flex-col bg-darkNavy">
         <div className="flex-grow flex">
           <div className="bg-darkNavy flex flex-row h-fit pt-8">
             <div className="flex flex-col pl-5 space-y-4 w-fit lg:w-3/4 xl:w-9/12">
@@ -42,13 +48,14 @@ function Dashboard() {
                 tailored to search engine algorithms, ensuring improved traffic,
                 relevance, and user engagement.
               </div>
-              <div className="mx-auto">
+              <div className="flex flex-col items-center justify-center">
                 <div
                   onClick={navtotry}
-                  className=" mt-0 px-10 py-2 my-9 h-fit w-fit bg-xoraTeal text-center text-4xl font-medium hover:opacity-80 rounded-lg cursor-pointer"
+                  className={`px-10 py-2 ${warn?"mb-2":"mb-9"} h-fit w-fit bg-xoraTeal text-center text-4xl font-medium hover:opacity-80 rounded-lg cursor-pointer`}
                 >
                   Try it
                 </div>
+                <p className={`text-red-500 ${warn?"mb-1":"hidden"}`}>Please Login to access it......</p>
               </div>
             </div>
             {/* Dashboard Image */}

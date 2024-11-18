@@ -16,7 +16,7 @@ function QandA({ question, answer }) {
   }, [isOpen]);
 
   return (
-    <div className=" text-white border border-b-1 border-t-0 border-l-0 border-r-0  rounded-md my-1 p-3  w-full max-w-3xl items-centre ">
+    <div className=" text-white border border-b-1 border-t-0 border-l-0 border-r-0  rounded-md my-1 p-3  w-4/5 max-w-3xl items-centre ">
 
       <div
         className="flex justify-between items-center cursor-pointer"

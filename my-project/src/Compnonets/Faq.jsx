@@ -33,11 +33,10 @@ const Faq = () => {
   ];
 
   return (
-    <>
       <div className=" flex flex-col bg-navy2 min-h-screen h-full">
         <Navbar />
         <div className="flex flex-col justify-center my-10  items-center">
-          <h1 className="text-white text-4xl  text-start mb-5 px-40 py-5">
+          <h1 className="text-white text-4xl text-start mb-5 px-40 py-5">
             How to use ?
           </h1>
           <video width="640" height="360" controls>
@@ -53,7 +52,6 @@ const Faq = () => {
         </div>
         <Footer />
       </div>
-    </>
   );
 };
 

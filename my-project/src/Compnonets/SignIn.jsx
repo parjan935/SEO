@@ -9,8 +9,11 @@ import 'react-toastify/dist/ReactToastify.css';
 function SignIn() {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
+  const [message, setMessage] = useState("");
+
   
   const notifyLogin = (e) => toast.success(e);
+
   
   const getUser = async () => {
     try {
@@ -46,6 +49,7 @@ function SignIn() {
         password,
     };
 
+
     try {
         const response = await fetch('http://localhost:3000/user/login', {
             method: 'POST',
@@ -59,20 +63,31 @@ function SignIn() {
         console.log(result)
         if (response.ok) {
           notifyLogin("Login Successfull!");
+          setMessage("Login successfully!")
           localStorage.setItem('Token', result.token);
+          setUserName("")
+          setPassword("")
           getUser();
           setTimeout(() => {
-            navigate("/");
+            navigate("/user");
           }, 1000);
         } else {
-            alert(result.error);
+            setMessage(result.error)
+            setTimeout(()=>{
+              setMessage("")
+            },5000)
         }
     }
     catch(err){
       console.log(err)
+      setMessage(err);
+      setTimeout(()=>{
+        setMessage("")
+      },5000)
     }
 
   }
+
 
   const navigate = useNavigate();
   const signup = () => {
@@ -80,12 +95,11 @@ function SignIn() {
   };
 
   return (
-    <div>
+    <div className="flex flex-col max-h-screen">
       <Navbar option="signin" />
-      <div className="flex bg-darkNavy h-screen pt-20 items-center justify-center flex-grow">
-        <div className="w-[500px] bg-navy2 p-8 text-white">
+      <div className="flex bg-darkNavy items-center justify-center h-screen ">
           <form
-            className="flex flex-col shadow-slate-800 shadow-[0px_0px_240px_rgba(1,1,1,100)] bg-navy2 p-4 rounded-2xl space-y-5 py-8 px-8 md:-mt-20"
+            className="w-[450px] text-white flex flex-col shadow-slate-800 shadow-[0px_0px_240px_rgba(1,1,1,100)] bg-navy2 p-4 rounded-2xl space-y-5 py-8 px-8"
             onSubmit={handleSubmit}
           >
             <h1 className="text-5xl text-white  font-bold text-center">
@@ -124,7 +138,7 @@ function SignIn() {
                 required
               />
             </div>
-
+            <p className="text-red-500 text-center m-0 text-sm">{message}</p>
             <button
               type="submit"
               className="bg-blue-500 text-white py-2 px-4 rounded-md shadow-md hover:bg-blue-600 transition-colors "
@@ -139,7 +153,6 @@ function SignIn() {
             </div>
           </form>
         </div>
-      </div>
       <ToastContainer  position="top-center" autoClose={1000} limit={3} />
     </div>
   );

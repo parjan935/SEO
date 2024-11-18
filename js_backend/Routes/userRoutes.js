@@ -7,6 +7,14 @@ const { jwtMiddleware, gToken } = require("../jwt");
 
 require('dotenv').config();  
 
+const validatePassword = (password) => {
+  
+  if (password.length < 8 || !/[A-Z]/.test(password) || !/[a-z]/.test(password) 
+    || !/\d/.test(password)) {
+       return false;
+  }
+  return true;
+};
 
 router.post("/signup", async (req, res) => {
   try {
@@ -15,17 +23,22 @@ router.post("/signup", async (req, res) => {
 
     const adminUser = await User.findOne({ role: "admin" });
     if (data.role === "admin" && adminUser) {
-      return res.status(400).json({ error: "Admin user already exists" });
+      return res.status(400).json({ error: "Admin user already exists!" });
     }
 
     const existingUserByEmail = await User.findOne({ email });
     if (existingUserByEmail) {
-      return res.status(409).json({ error: "User already exists with this email." });
+      return res.status(409).json({ error: "User already exists with this email!" });
     }
 
     const existingUserByUsername = await User.findOne({ userName });
     if (existingUserByUsername) {
-      return res.status(409).json({ error: "Username is already taken. \n Select a unique userName." });
+      return res.status(409).json({ error: "Username is already taken!" });
+    }
+
+    const validPass=validatePassword(password)
+    if(!validPass){
+      return res.status(409).json({ error: "Invalid password!" });
     }
 
     const newUser = new User(data);
@@ -98,47 +111,6 @@ router.put("/profile",jwtMiddleware, async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 });
-
-// // Otp sender 
-// const transporter = nodemailer.createTransport({
-//   service: 'gmail',
-//   auth: {
-//     user: process.env.EMAIL,
-//     pass:process.env.EMAIL_PASS,
-//   },
-// });
-
-// function generateOTP() {
-//   return Math.floor(100000 + Math.random() * 900000);
-// }
-
-// function validateEmail(email){
-//   return email.endsWith('@gmail.com');
-// }
-
-// router.post('/send-otp', (req, res) => {
-//   const { email } = req.body;
-//   const otp = generateOTP();
-
-//   if(!validateEmail(email)){
-//     return res.status(400).send({error:'invalid email'})
-//   }
-
-//   const mailOptions = {
-//     from: process.env.EMAIL,
-//     to: email,
-//     subject: 'Your OTP Code',
-//     text: `Your One-Time-Password for registering in SEO Optimiser is ${otp}`,
-//   };
-
-//   transporter.sendMail(mailOptions, (error, info) => {
-//     if (error) {
-//       console.log(error)
-//       return res.status(500).send({error: 'Error sending email' });
-//     }
-//     res.send({ success: true, otp });
-//   });
-// });
 
 
 

@@ -77,21 +77,26 @@ function SignIn() {
         setMessage("User registered successfully!");
         localStorage.setItem("Token", result.token);
         getUser();
+        setEmail("");
+        setPassword("");
+        setUserName("");
         setTimeout(() => {
           navigate("/");
         }, 1000);
       } else {
         setMessage(result.error);
-        alert(result.error);
+        setTimeout(()=>{
+          setMessage("")
+        },5000)
       }
     } catch (err) {
       setMessage("Error connecting to the server");
+      setTimeout(()=>{
+        setMessage("")
+      },5000)
       console.log("Error connecting to the server");
       console.log(err);
     }
-    setEmail("");
-    setPassword("");
-    setUserName("");
   };
 
   
@@ -100,14 +105,12 @@ function SignIn() {
   };
 
   return (
-    <div>
+    <div className="flex flex-col max-h-screen">
       <Navbar option="signup" />
-      <div className="bg-darkNavy h-screen flex items-center justify-center ">
-        <div className="w-[500px] bg-navy2 shadow-5xl p-8 text-white ">
+      <div className="bg-darkNavy pt-20 h-screen flex items-center justify-center ">
           {/* registratiom */}
-
           <form
-            className="flex flex-col shadow-slate-800 shadow-[0px_0px_240px_rgba(1,1,1,100)] bg-navy2 p-4 rounded-2xl space-y-5 py-8 px-8 md:-mt-20"
+            className="w-[450px] text-white flex flex-col shadow-slate-800 shadow-[0px_0px_240px_rgba(1,1,1,100)] bg-navy2 p-4 rounded-2xl space-y-5 py-8 px-8 md:-mt-20"
             onSubmit={handleSubmit}
           >
             <h1 className="text-5xl text-white  font-bold text-center">
@@ -161,7 +164,7 @@ function SignIn() {
                 required
               />
             </div>
-
+            <p className="text-red-500 text-center m-0 text-sm">{message}</p>
             <button
               type="submit"
               className="bg-blue-500 text-white py-2 px-4 rounded-md shadow-md hover:bg-blue-600 transition-colors "
@@ -176,7 +179,6 @@ function SignIn() {
             </div>
           </form>
         </div>
-      </div>
       <ToastContainer  position="top-center" autoClose={1000} limit={3} />
     </div>
   );

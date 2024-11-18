@@ -5,7 +5,7 @@ import SignIn from "./SignIn";
 import Profile from "./Profile";
 import Modal from "react-modal";
 
-const Navbar = ({ option }) => {
+const Navbar = ({ option,login }) => {
   const [isOpen, setIsOpen] = useState(true);
   const [menu, setmenu] = useState(false);
   const [detailsVisible,setdetailsVisible]=useState(false);
@@ -53,6 +53,7 @@ const Navbar = ({ option }) => {
   const openMenu = () => {
     setmenu(!menu);
   };
+
 
   return (
     <>
@@ -126,8 +127,6 @@ const Navbar = ({ option }) => {
             <i onClick={openModal} className="fa-solid fa-user fa-2xl bg-white p-5 px-2 cursor-pointer rounded-full hover:bg-gray-300 mr-5"></i>
             <Profile isOpen={isModalOpen} onClose={closeModal} userDetails={userDetails} />
           </div>
-          // <Link to="/profile">
-          // </Link>
         ) : (
           <Link to={option == "signin" ? "/signup" : "/signin"}>
             <div
@@ -141,10 +140,9 @@ const Navbar = ({ option }) => {
       </nav>
       {/* menu */}
       <div
-        className={` ${menu ? "mt-20" : "mt-0"} ${
+        className={` mt-20 ${
           menu ? `max-h-[1000px]` : `max-h-0`
-        } ${
-          menu || option == "signin" || option == "signup" ? "mt-0" : "mt-20"
+        }
         }  overflow-hidden bg-gray-500  duration-1000 ease-in-out`}
       >
         <Link to="/">
@@ -157,7 +155,7 @@ const Navbar = ({ option }) => {
             Features
           </div>
         </Link>
-        <Link to="/price">
+        <Link to="/pricing">
           <div className="text-white text-xl font-medium pl-10 py-1 hover:bg-gray-400  ">
             Pricing
           </div>
