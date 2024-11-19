@@ -8,12 +8,14 @@ import Faq from "./Compnonets/Faq";
 import Features from "./Compnonets/Features";
 import Copy from "./Compnonets/Copy";
 import Profile from "./Compnonets/Profile";
+import ForgetPass from "./Compnonets/ForgetPass";
 
 export default function App() {
   return (
     <>
       <BrowserRouter>
         <Routes>
+          {/* <Route path="/" element={<ForgetPass/>}></Route> */}
           <Route path="/" element={<Dashboard />}></Route>
           <Route path="/profile" element={<Profile />}></Route>
           <Route path="/signup" element={<SignUp />}></Route>

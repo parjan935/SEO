@@ -5,14 +5,12 @@ import Footer from "./Footer";
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import ForgetPass from "./ForgetPass";
 
 function SignIn() {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
-
-  
-  const notifyLogin = (e) => toast.success(e);
 
   
   const getUser = async () => {
@@ -48,8 +46,6 @@ function SignIn() {
         userName,
         password,
     };
-
-
     try {
         const response = await fetch('http://localhost:3000/user/login', {
             method: 'POST',
@@ -62,8 +58,7 @@ function SignIn() {
         const result = await response.json();
         console.log(result)
         if (response.ok) {
-          notifyLogin("Login Successfull!");
-          setMessage("Login successfully!")
+          toast.success("Login Successfull!");
           localStorage.setItem('Token', result.token);
           setUserName("")
           setPassword("")
@@ -88,11 +83,19 @@ function SignIn() {
 
   }
 
-
   const navigate = useNavigate();
   const signup = () => {
     navigate("/signup");
   };
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openForgetpass=()=>{
+    setIsModalOpen(true)
+  }
+  const closeForgetpass=()=>{
+    setIsModalOpen(false)
+  }
 
   return (
     <div className="flex flex-col max-h-screen">
@@ -138,7 +141,12 @@ function SignIn() {
                 required
               />
             </div>
-            <p className="text-red-500 text-center m-0 text-sm">{message}</p>
+            {message!=""?<p className="text-red-500 text-center m-0 text-sm">{message}</p>:""}
+
+            <div>
+              <p onClick={openForgetpass} className="hover:underline cursor-pointer w-fit text-blue-400 text-sm m-0 mx-auto">forgot password ?</p>
+              <ForgetPass isOpen={isModalOpen} onClose={closeForgetpass} />
+            </div>
             <button
               type="submit"
               className="bg-blue-500 text-white py-2 px-4 rounded-md shadow-md hover:bg-blue-600 transition-colors "

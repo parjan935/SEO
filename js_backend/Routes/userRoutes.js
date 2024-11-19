@@ -1,17 +1,23 @@
 const express = require("express");
 const router = express.Router();
-const nodemailer = require('nodemailer');
+const nodemailer = require("nodemailer");
 const User = require("../models/user");
 const { jwtMiddleware, gToken } = require("../jwt");
 
+const bodyParser = require("body-parser");
 
-require('dotenv').config();  
+router.use(bodyParser.json()); 
+
+require("dotenv").config();
 
 const validatePassword = (password) => {
-  
-  if (password.length < 8 || !/[A-Z]/.test(password) || !/[a-z]/.test(password) 
-    || !/\d/.test(password)) {
-       return false;
+  if (
+    password.length < 8 ||
+    !/[A-Z]/.test(password) ||
+    !/[a-z]/.test(password) ||
+    !/\d/.test(password)
+  ) {
+    return false;
   }
   return true;
 };
@@ -19,7 +25,7 @@ const validatePassword = (password) => {
 router.post("/signup", async (req, res) => {
   try {
     const data = req.body;
-    const { userName, email, password, role , subscription } = data;
+    const { userName, email, password, role, subscription } = data;
 
     const adminUser = await User.findOne({ role: "admin" });
     if (data.role === "admin" && adminUser) {
@@ -28,7 +34,9 @@ router.post("/signup", async (req, res) => {
 
     const existingUserByEmail = await User.findOne({ email });
     if (existingUserByEmail) {
-      return res.status(409).json({ error: "User already exists with this email!" });
+      return res
+        .status(409)
+        .json({ error: "User already exists with this email!" });
     }
 
     const existingUserByUsername = await User.findOne({ userName });
@@ -36,10 +44,12 @@ router.post("/signup", async (req, res) => {
       return res.status(409).json({ error: "Username is already taken!" });
     }
 
-    const validPass=validatePassword(password)
-    if(!validPass){
+    const validPass = validatePassword(password);
+    if (!validPass) {
       return res.status(409).json({ error: "Invalid password!" });
     }
+
+    res.status(200).json({response:"Details verified successfully"})
 
     const newUser = new User(data);
     const response = await newUser.save();
@@ -48,7 +58,7 @@ router.post("/signup", async (req, res) => {
     const payload = {
       id: response.id,
     };
-    
+
     console.log(JSON.stringify(payload));
     const token = gToken(payload);
     console.log("Token is : ", token);
@@ -60,10 +70,11 @@ router.post("/signup", async (req, res) => {
   }
 });
 
+
 router.post("/login", async (req, res) => {
   try {
     const { userName, password } = req.body;
-    const user = await User.findOne({userName});
+    const user = await User.findOne({ userName });
     if (!user || !(await user.comparePassword(password))) {
       return res.status(401).json({ error: "Invalid username or password" });
     }
@@ -86,32 +97,96 @@ router.get("/profile", jwtMiddleware, async (req, res) => {
     const user = await User.findById(userId);
 
     res.status(200).json({ user });
-  } 
-  catch (err) {
+  } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
 
 
-router.put("/profile",jwtMiddleware, async (req, res) => {
+let otpStore = {};
+
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: "sdupati4@gmail.com",
+    pass: "mavt fmuq thks hzoz",
+  },
+});
+
+// Sending OTP
+router.post("/request-otp", async (req, res) => {  
+  const { name } = req.body.body;
+  console.log(req.body)
+  const user=await User.findOne({userName:name})
+  if(!user){
+    return res.status(404).json({message:"User Not found"})
+  }
+  const email=user.email;
+  const otp = Math.floor(100000 + Math.random() * 900000);
+  otpStore[email] = otp;
+  
+  const mailOptions = {
+    from: "sdupati4@gmail.com",
+    to: email,
+    subject: "Your OTP Code",
+    text: `Your OTP code is ${otp},`,
+  };
+  
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      console.error("Error sending email:", error);
+      return res.status(500).json({ message: "Error sending email", error });
+    }
+    res.status(200).json({ message: "OTP sent successfully" });
+  });
+  console.log(otpStore)
+  transporter.verify((error, success) => {
+    if (error) {
+      console.error("Error with transporter:", error);
+    } else {
+      console.log("Server is ready to send emails:", success);
+    }
+  });
+});
+
+// Verify OTP
+router.post("/verify-otp", async (req, res) => {
+  const { name, otp } = req.body.body;
+  const user=await User.findOne({userName:name})
+  if(!user){
+    return res.status(404).json({message:"User Not found"})
+  }
+  const email=user.email;
+  console.log(email,otp)
+  if (otpStore[email] && otpStore[email] == otp) {
+    delete otpStore[email]; // OTP can only be used once
+    return res.status(200).json({ message: "OTP verified successfully" });
+  }
+  res.status(400).json({ message: "Invalid OTP" });
+});
+
+
+
+router.put("/resetPass", async (req, res) => {
   try {
-    const Userid = req.user.id;
-    const { currentPassword, newPassword } = req.body;
-    const user = await User.findById(Userid);
-    if (!(await user.comparePassword(currentPassword))) {
-      return res.status(401).json({ error: "Incorrect Current Password" });
+    const { name, newPassword, confirmNewPassword } = req.body.body;
+    const user = await User.findOne({userName:name});
+    if(!user){
+      return res.status(404).json({message:"User Not found"})
+    }
+    if(newPassword!=confirmNewPassword){
+      return res.status(401).json({message:"Passwords doesn't match"})
     }
     user.password = newPassword;
     await user.save();
     console.log("password updated :)");
-    res.status(200).json({message:"Password changed successfully "});
+    res.status(200).json({ message: "Password reset successfull " });
   } catch (error) {
-    console.log("error");
+    console.log(error);
     res.status(500).json({ error: "Internal server error" });
   }
 });
-
 
 
 module.exports = router;

@@ -3,25 +3,45 @@ import { useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function SignIn() {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
-  const [otpStatus, setOtpStatus] = useState("");
-  const [otp, setotp] = useState("");
-  const [userOtp, setUserOtp] = useState("");
-  const [verification, setVerfication] = useState(false);
-  const [checkOtp, setCheckOtp] = useState("");
+
+  const [otp, setOtp] = useState(new Array(6).fill(""));
+  const [optsent, setotpsent] = useState(false);
 
   const notifyLogin = (e) => toast.success(e);
 
   const navigate = useNavigate();
+
+  const handleChange = (element, index) => {
+    if (isNaN(element.value)) return;
+
+    const newOtp = [...otp];
+    newOtp[index] = element.value;
+    setOtp(newOtp);
+
+    if (element.nextSibling && element.value) {
+      element.nextSibling.focus();
+    }
+  };
+
+  const handleKeyDown = (e, index) => {
+    if (e.key === "Backspace") {
+      const newOtp = [...otp];
+      newOtp[index] = "";
+      setOtp(newOtp);
+
+      if (e.target.previousSibling) {
+        e.target.previousSibling.focus();
+      }
+    }
+  };
 
   const getUser = async () => {
     try {
@@ -43,7 +63,6 @@ function SignIn() {
 
       const data = await response.json();
       console.log(data.user);
-      // localStorage.setItem("userDetails", JSON.stringify(data.user));
     } catch (err) {
       console.log("Error fetching users:", err);
     }
@@ -74,41 +93,96 @@ function SignIn() {
 
       if (response.ok) {
         notifyLogin("Registration Successfull!");
-        setMessage("User registered successfully!");
         localStorage.setItem("Token", result.token);
         getUser();
-        setEmail("");
-        setPassword("");
-        setUserName("");
         setTimeout(() => {
           navigate("/");
         }, 1000);
       } else {
         setMessage(result.error);
-        setTimeout(()=>{
-          setMessage("")
-        },5000)
+        setTimeout(() => {
+          setMessage("");
+        }, 5000);
       }
     } catch (err) {
       setMessage("Error connecting to the server");
-      setTimeout(()=>{
-        setMessage("")
-      },5000)
+      setTimeout(() => {
+        setMessage("");
+      }, 5000);
       console.log("Error connecting to the server");
       console.log(err);
     }
   };
 
-  
   const signin = () => {
     navigate("/signin");
+  };
+
+  const validateOTP = async (e) => {
+    e.preventDefault();
+    if (otp.join("") === "") {
+      seterror("Please Enter OTP");
+      setTimeout(() => {
+        seterror("");
+      }, 2000);
+      return;
+    }
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/user/verify-otp",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: { name: userName, otp: otp.join(""), use: "Registration" },
+        }
+      );
+      console.log("OTP verified");
+      toast.success(response.data.message);
+      seterror("");
+      setEmail("");
+      setPassword("");
+      setUserName("");
+      setotpsent(false)
+    } catch (error) {
+      setMessage(error.response.data.message);
+    }
   };
 
   return (
     <div className="flex flex-col max-h-screen">
       <Navbar option="signup" />
       <div className="bg-darkNavy pt-20 h-screen flex items-center justify-center ">
-          {/* registratiom */}
+        {/* registratiom */}
+        {optsent ? (
+          <form
+            className="w-[450px] text-white flex flex-col shadow-slate-800 shadow-[0px_0px_240px_rgba(1,1,1,100)] bg-navy2 p-4 rounded-2xl space-y-5 py-8 px-8 md:-mt-20"
+            onSubmit={validateOTP}
+          >
+            <h1 className="text-2xl font-semibold mb-6">Enter OTP</h1>
+            <div className="flex gap-2">
+              {otp.map((value, index) => (
+                <input
+                  key={index}
+                  type="text"
+                  maxLength="1"
+                  value={value}
+                  onChange={(e) => handleChange(e.target, index)}
+                  onKeyDown={(e) => handleKeyDown(e, index)}
+                  onFocus={(e) => e.target.select()}
+                  className="w-12 h-12 mb-3 text-center text-xl border rounded-md border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              ))}
+            </div>
+            <button
+              type="submit"
+              className="bg-blue-500 text-white py-2 px-4 rounded-md shadow-md hover:bg-blue-600 transition-colors "
+            >
+              Verift OTP
+            </button>
+          </form>
+        ) : (
           <form
             className="w-[450px] text-white flex flex-col shadow-slate-800 shadow-[0px_0px_240px_rgba(1,1,1,100)] bg-navy2 p-4 rounded-2xl space-y-5 py-8 px-8 md:-mt-20"
             onSubmit={handleSubmit}
@@ -164,6 +238,7 @@ function SignIn() {
                 required
               />
             </div>
+
             <p className="text-red-500 text-center m-0 text-sm">{message}</p>
             <button
               type="submit"
@@ -178,8 +253,9 @@ function SignIn() {
               </a>
             </div>
           </form>
-        </div>
-      <ToastContainer  position="top-center" autoClose={1000} limit={3} />
+        )}
+      </div>
+      <ToastContainer position="top-center" autoClose={1000} limit={3} />
     </div>
   );
 }
