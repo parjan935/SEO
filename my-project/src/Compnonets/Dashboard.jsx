@@ -32,15 +32,15 @@ function Dashboard() {
   return (
     <>
       <Navbar />
-      <div className="flex flex-col bg-darkNavy">
+      <div className="flex flex-col bg-darkNavy pt-20 h-fit min-h-screen">
         <div className="flex-grow flex">
           <div className="bg-darkNavy flex flex-row h-fit pt-8">
             <div className="flex flex-col pl-5 space-y-4 w-fit lg:w-3/4 xl:w-9/12">
               <div className="text-yellow-400 text-lg ml-8">SEO optimizer</div>
-              <div className="text-white h-fit w-2/5 mx-10 text-7xl md:text-8xl lg:text-7xl font-bold xl:text-8xl">
+              <div className="text-center sm:text-left w-fit text-white  h-fit sm:w-2/5 mx-10 text-5xl sm:text-7xl md:text-8xl lg:text-7xl font-bold xl:text-8xl">
                 AMAZINGLY SIMPLE
               </div>
-              <div className="text-white text-base font-semibold mx-10 py-8 w-fit h-fit ">
+              <div className="text-white text-center sm:text-left text-base text-ce font-semibold mx-10 py-8 w-fit h-fit ">
                 SEO Optimizer with GENAI is a cutting-edge tool designed to
                 revolutionize search engine optimization by leveraging
                 generative AI. It automates content analysis, keyword

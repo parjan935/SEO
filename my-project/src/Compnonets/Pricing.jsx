@@ -6,7 +6,7 @@ function Pricing() {
   return (
     <>
       <Navbar />
-      <div className=" bg-darkNavy flex flex-col lg:flex-row lg:h-screen lg:pt-0 pt-20 items-center justify-center space-y-20 lg:-mt-20 lg:space-x-10  lg:space-y-0 pb-10">
+      <div className=" bg-darkNavy flex flex-col lg:flex-row lg:h-screen lg:pt-0 pt-40 items-center justify-center space-y-20  lg:space-x-10  lg:space-y-0 pb-10">
         {/* General */}
         <div
           className="flex flex-col text-white h-[450px] w-[300px] rounded-lg text-2xl bg-blue-500 hover:scale-110 

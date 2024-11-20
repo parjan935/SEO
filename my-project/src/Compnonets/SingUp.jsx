@@ -184,7 +184,7 @@ function SignIn() {
           </form>
         ) : (
           <form
-            className="w-[450px] text-white flex flex-col shadow-slate-800 shadow-[0px_0px_240px_rgba(1,1,1,100)] bg-navy2 p-4 rounded-2xl space-y-5 py-8 px-8 md:-mt-20"
+            className="w-[380px] md:w-[450px] text-white flex flex-col shadow-slate-800 shadow-[0px_0px_240px_rgba(1,1,1,100)] bg-navy2 p-4 rounded-2xl space-y-5 py-8 px-8 md:-mt-20"
             onSubmit={handleSubmit}
           >
             <h1 className="text-5xl text-white  font-bold text-center">

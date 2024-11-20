@@ -176,17 +176,17 @@ const ForgetPass = ({ isOpen, onClose }) => {
         <div className="text-end">
           <i
             onClick={handleOverlayClick}
-            className="fa-solid fa-xmark w-fit mb-3 p-1 rounded-sm cursor-pointer"
+            className={`fa-solid fa-xmark w-fit mb-3 p-1 rounded-sm cursor-pointer hover:rotate-90 duration-300`}
           ></i>
         </div>
 
         {/* Send OTP */}
         <form
-          className={`flex flex-col items-center ${optsent ? "hidden" : ""} `}
+          className={`w-[250px] md:w-[300px] flex flex-col items-center ${optsent ? "hidden" : ""} `}
         >
           <h1 className="text-2xl font-semibold mb-6">Enter Username</h1>
           <input
-            className="w-[300px] p-3 mb-3 border rounded-md border-gray-300 focus:ring-blue-500"
+            className="w-[250px] md:w-[300px] p-3 mb-3 border rounded-md border-gray-300 focus:ring-blue-500"
             type="text"
             name="name"
             id="name"
@@ -212,7 +212,8 @@ const ForgetPass = ({ isOpen, onClose }) => {
             optsent && !optVerified ? "" : "hidden"
           }`}
         >
-          <h1 className="text-2xl font-semibold mb-6">Enter OTP</h1>
+          <h1 className="text-2xl font-semibold mb-0">Enter OTP </h1>
+          <p className="mb-4">sent to your registered email</p>
           <div className="flex gap-2">
             {otp.map((value, index) => (
               <input

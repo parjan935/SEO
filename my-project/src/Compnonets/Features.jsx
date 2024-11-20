@@ -40,7 +40,7 @@ const Features = () => {
     <>
       <div className=" flex flex-col bg-navy2 h-fit min-h-screen">
         <Navbar />
-        <div className="my-8 px-10 text-gray-300 text-center items-center flex-grow">
+        <div className="my-8 pt-20 px-10 text-gray-300 text-center items-center flex-grow">
           <h1 className="text-3xl font-bold text-center mb-6">
             SEO Optimizer Features
           </h1>

@@ -35,17 +35,17 @@ const Faq = () => {
   return (
       <div className=" flex flex-col bg-navy2 min-h-screen h-full">
         <Navbar />
-        <div className="flex flex-col justify-center my-10  items-center">
-          <h1 className="text-white text-4xl text-start mb-5 px-40 py-5">
+        <div className="flex flex-col justify-center my-10 pt-20 items-center">
+          <h1 className="text-white min-w-screen text-center sm:text-4xl text-xl  mb-5 px-40 py-5">
             How to use ?
           </h1>
-          <video width="640" height="360" controls>
+          <video className="w-[400px] sm:w-[500px] md:w-[640px]" width="" height="360" controls>
             <source src="./src/videos/large.mp4" type="video/mp4" />
             Your browser does not support the video tag.
           </video>
         </div>
         <div className=" text-white  flex flex-col justify-center my-10  items-center flex-grow">
-          <h1 className="text-white text-4xl items-start mb-5">FAQ's</h1>
+          <h1 className="text-white sm:text-4xl text-2xl items-start mb-5">FAQ's</h1>
           {faqs.map((faq, index) => (
             <QandA question={faq.question} answer={faq.answer} />
           ))}

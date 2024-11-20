@@ -62,7 +62,7 @@ const Main = () => {
   return (
     <div className="flex flex-col bg-navy2 min-h-screen h-fit">
       <Navbar />
-      <div className="mt-20 text-center flex-grow pb-10">
+      <div className="mt-32 text-center flex-grow pb-10">
         <input
           className="m-5 text-white"
           type="file"
