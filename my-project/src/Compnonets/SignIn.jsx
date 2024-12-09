@@ -7,10 +7,15 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ForgetPass from "./ForgetPass";
 
+import {saveTokenToLocalStorage} from '../utils/TokenUtils'
+import Spinner from "./Spinner";
+
 function SignIn() {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
+
+  const [inProcess,setInProcess]=useState(false)
 
   
   const getUser = async () => {
@@ -40,8 +45,8 @@ function SignIn() {
 
 
   const handleSubmit = async (e) => {
+    setInProcess(true)
     e.preventDefault();
-
     const data = {
         userName,
         password,
@@ -59,13 +64,23 @@ function SignIn() {
         console.log(result)
         if (response.ok) {
           toast.success("Login Successfull!");
-          localStorage.setItem('Token', result.token);
           setUserName("")
           setPassword("")
           getUser();
-          setTimeout(() => {
-            navigate("/");
-          }, 1000);
+          if(userName==="Admin"){
+            // localStorage.setItem('AdminToken',result.token)
+            saveTokenToLocalStorage('AdminToken',result.token); 
+            setTimeout(() => {
+              navigate("/admin/dashboard");
+            }, 1000);
+          }
+          else{
+            // localStorage.setItem('Token', result.token);
+            saveTokenToLocalStorage('Token',result.token); 
+            setTimeout(() => {
+              navigate("/");
+            }, 1000);
+          }
         } else {
             setMessage(result.error)
             setTimeout(()=>{
@@ -80,6 +95,7 @@ function SignIn() {
         setMessage("")
       },5000)
     }
+    setInProcess(false)
 
   }
 
@@ -151,7 +167,7 @@ function SignIn() {
               type="submit"
               className="bg-blue-500 text-white py-2 px-4 rounded-md shadow-md hover:bg-blue-600 transition-colors "
             >
-              Log In
+              {inProcess?<Spinner/> :"Log In"}
             </button>
             <div className="w-full text-center">
               New here ?{" "}

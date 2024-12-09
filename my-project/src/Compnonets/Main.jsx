@@ -5,15 +5,32 @@ import LoadingDots from "./LoadingDots";
 import Footer from "./Footer";
 import Copy from "./Copy";
 
+import userDetails from './Navbar'
+import { useNavigate } from "react-router-dom";
+
+
 const Main = () => {
+
+  const token=localStorage.getItem('Token')
+  const navigate=useNavigate()
+
   const [videoFile, setVideoFile] = useState(null);
+  const [videoSize, setVideoSize] = useState(null);
+
   const [status, setStatus] = useState("");
   const [data, setData] = useState(null);
   const [process, setProcess] = useState(false);
   const [isDisable, setIsDisable] = useState(false);
 
-  const handleFileChange = (e) => setVideoFile(e.target.files[0]);
-  
+  const handleFileChange = (e) => {
+    console.log(userDetails)
+    setVideoFile(e.target.files[0]);
+    const fil=videoFile
+    if (videoFile) {
+      const fileSizeInMB = (videoFile.size / (1024 * 1024)).toFixed(2);
+      setVideoSize(fileSizeInMB);
+    }
+  }
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -59,10 +76,18 @@ const Main = () => {
     );
   };
 
+  useEffect(()=>{
+    if(!token){
+      alert("Session Logged Out.\nPlease Login Again.")
+      navigate('/signin')
+      // return null;
+    };
+  },[])
+
   return (
     <div className="flex flex-col bg-navy2 min-h-screen h-fit">
       <Navbar />
-      <div className="mt-32 text-center flex-grow pb-10">
+      <div className="mt-32 text-center text-white flex-grow pb-10">
         <input
           className="m-5 text-white"
           type="file"
@@ -73,9 +98,13 @@ const Main = () => {
           id="video"
           placeholder="Select Video"
         />
+        <p>
+          {userDetails.email}
+        </p>
         {videoFile && (
           <div className="text-white space-y-5">
             <p>Selected File: {videoFile.name}</p>
+            {videoFile && <p className="text-lime-500">Video Size: {(videoFile.size / (1024 * 1024)).toFixed(2) } MB</p>}
             <button
               disabled={isDisable}
               className={`bg-red-500 p-2 rounded ${

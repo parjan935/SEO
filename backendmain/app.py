@@ -37,7 +37,7 @@ You are an expert Search Engine Optimizer. Analyze the given video transcript an
 2. 5-7 important keywords relevant to the video content
 3. 3-5 relevant hashtags for social media promotion
 4. 2-3 suggestions for optimizing the video title for SEO
-Format the output clearly with appropriate headings for each section and return(not a JSON)  as {"Summary":summmary text,"Keywords":list of keywords,"Hashtags":list of hashtags,"Titles": list of titles} so i can access by using response.Summary .
+Format the output clearly with appropriate headings for each section and return(not a JSON)  as {"Summary":summmary text,"Keywords":list of keywords,"Hashtags":list of hashtags,"Titles": list of titles} so i can access by using response.Summary.
 """
 
 # Initialize Whisper Model

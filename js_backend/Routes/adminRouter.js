@@ -68,10 +68,10 @@ router.get('/users',jwtMiddleware, async (req, res) => {
         if (!await checkAdminRole(req.user.id)) {
             return res.status(403).json({ message: "You must be an admin to perform this operation" });
         }
-        const users = await User.find({}, 'name mobile email subscription _id');
+        const users = await User.find({userName:{$ne:"Admin"}}, {userName:1,email:1,subscription:1,_id:0});
         res.status(200).json(users);
     } catch (err) {
-        console.log(err);
+        console.log("err",err);
         res.status(500).json({ error: 'Internal Server Error' });
     }
 });

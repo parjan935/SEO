@@ -6,7 +6,11 @@ const { jwtMiddleware, gToken } = require("../jwt");
 
 const bodyParser = require("body-parser");
 
-router.use(bodyParser.json()); 
+const stripe = require("stripe")(
+  "sk_test_51OyWGwSDlwM9qquDSuATkRTE8jEBu0kfNR9G69E2ukJ5tanuoorbLIKJRVRx3SXrBpHVZWUlgbC6ZcLmuYCOORGA00odlfGerI"
+);
+
+router.use(bodyParser.json());
 
 require("dotenv").config();
 
@@ -22,6 +26,7 @@ const validatePassword = (password) => {
   return true;
 };
 
+// Signup
 router.post("/signup", async (req, res) => {
   try {
     const data = req.body;
@@ -49,7 +54,7 @@ router.post("/signup", async (req, res) => {
       return res.status(409).json({ error: "Invalid password!" });
     }
 
-    res.status(200).json({response:"Details verified successfully"})
+    res.status(200).json({ response: "Details verified successfully" });
 
     const newUser = new User(data);
     const response = await newUser.save();
@@ -59,9 +64,9 @@ router.post("/signup", async (req, res) => {
       id: response.id,
     };
 
-    console.log(JSON.stringify(payload));
+    // console.log(JSON.stringify(payload));
     const token = gToken(payload);
-    console.log("Token is : ", token);
+    // console.log("Token is : ", token);
 
     res.status(200).json({ response: response, token: token });
   } catch (err) {
@@ -70,7 +75,7 @@ router.post("/signup", async (req, res) => {
   }
 });
 
-
+// login
 router.post("/login", async (req, res) => {
   try {
     const { userName, password } = req.body;
@@ -103,7 +108,6 @@ router.get("/profile", jwtMiddleware, async (req, res) => {
   }
 });
 
-
 let otpStore = {};
 
 const transporter = nodemailer.createTransport({
@@ -114,25 +118,25 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-// Sending OTP
-router.post("/request-otp", async (req, res) => {  
+// Send OTP
+router.post("/request-otp", async (req, res) => {
   const { name } = req.body.body;
-  console.log(req.body)
-  const user=await User.findOne({userName:name})
-  if(!user){
-    return res.status(404).json({message:"User Not found"})
+  console.log(req.body);
+  const user = await User.findOne({ userName: name });
+  if (!user) {
+    return res.status(404).json({ message: "User Not found" });
   }
-  const email=user.email;
+  const email = user.email;
   const otp = Math.floor(100000 + Math.random() * 900000);
   otpStore[email] = otp;
-  
+
   const mailOptions = {
     from: "sdupati4@gmail.com",
     to: email,
     subject: "Your OTP Code",
     text: `Your OTP code is ${otp},`,
   };
-  
+
   transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
       console.error("Error sending email:", error);
@@ -140,7 +144,7 @@ router.post("/request-otp", async (req, res) => {
     }
     res.status(200).json({ message: "OTP sent successfully" });
   });
-  console.log(otpStore)
+  console.log(otpStore);
   transporter.verify((error, success) => {
     if (error) {
       console.error("Error with transporter:", error);
@@ -153,30 +157,29 @@ router.post("/request-otp", async (req, res) => {
 // Verify OTP
 router.post("/verify-otp", async (req, res) => {
   const { name, otp } = req.body.body;
-  const user=await User.findOne({userName:name})
-  if(!user){
-    return res.status(404).json({message:"User Not found"})
+  const user = await User.findOne({ userName: name });
+  if (!user) {
+    return res.status(404).json({ message: "User Not found" });
   }
-  const email=user.email;
-  console.log(email,otp)
+  const email = user.email;
+  console.log(email, otp);
   if (otpStore[email] && otpStore[email] == otp) {
-    delete otpStore[email]; // OTP can only be used once
+    delete otpStore[email]; 
     return res.status(200).json({ message: "OTP verified successfully" });
   }
   res.status(400).json({ message: "Invalid OTP" });
 });
 
-
-
+// password reset
 router.put("/resetPass", async (req, res) => {
   try {
     const { name, newPassword, confirmNewPassword } = req.body.body;
-    const user = await User.findOne({userName:name});
-    if(!user){
-      return res.status(404).json({message:"User Not found"})
+    const user = await User.findOne({ userName: name });
+    if (!user) {
+      return res.status(404).json({ message: "User Not found" });
     }
-    if(newPassword!=confirmNewPassword){
-      return res.status(401).json({message:"Passwords doesn't match"})
+    if (newPassword != confirmNewPassword) {
+      return res.status(401).json({ message: "Passwords doesn't match" });
     }
     user.password = newPassword;
     await user.save();
@@ -188,5 +191,30 @@ router.put("/resetPass", async (req, res) => {
   }
 });
 
+
+// making payment
+router.post("/create-payment-intent", async (req, res) => {
+  const { amount } = req.body;
+
+  const paymentIntent = await stripe.paymentIntents.create({
+    amount: amount,
+    currency: "usd",
+  });
+  //res.json({ clientSecret: paymentIntent.client_secret });
+  res.status(200).send({ clientSecret: paymentIntent.client_secret });
+});
+
+// update plan
+router.put("/updatePlan", jwtMiddleware, async (req, res) => {
+  const userData=req.user
+  const {updatedPlan}=req.body
+  // console.log(updatedPlan);
+  
+  const user=await User.findByIdAndUpdate(userData.id,{subscription:updatedPlan})
+  if(!user){
+    return res.status(401).send({message:"User not found"})
+  }
+  return res.status(200).send({message:"Updated successfully."})
+});
 
 module.exports = router;

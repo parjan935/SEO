@@ -6,6 +6,9 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['quicksand', 'sans-serif'],  // Setting Quicksand as the default sans font
+      },
       colors: {
         darkNavy: '#0B1121',
         navy2:"#0B1122", // Custom dark background color

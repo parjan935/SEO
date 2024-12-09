@@ -5,6 +5,7 @@
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.21.0",
-    "mongoose": "^8.7.0"
+    "mongoose": "^8.7.0",
+    "transformers": "^3.1.0"
   }
 }

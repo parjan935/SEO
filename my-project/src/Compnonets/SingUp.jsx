@@ -6,6 +6,9 @@ import Footer from "./Footer";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+import {saveTokenToLocalStorage} from '../utils/TokenUtils'
+import Spinner from "./Spinner";
+
 function SignIn() {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
@@ -14,6 +17,8 @@ function SignIn() {
 
   const [otp, setOtp] = useState(new Array(6).fill(""));
   const [optsent, setotpsent] = useState(false);
+
+  const [inProcess,setInProcess]=useState(false)
 
   const notifyLogin = (e) => toast.success(e);
 
@@ -69,6 +74,7 @@ function SignIn() {
   };
 
   const handleSubmit = async (e) => {
+    setInProcess(true)
     e.preventDefault();
 
     const data = {
@@ -93,7 +99,8 @@ function SignIn() {
 
       if (response.ok) {
         notifyLogin("Registration Successfull!");
-        localStorage.setItem("Token", result.token);
+        // localStorage.setItem("Token", result.token);
+        saveTokenToLocalStorage('Token',result.token); 
         getUser();
         setTimeout(() => {
           navigate("/");
@@ -112,6 +119,7 @@ function SignIn() {
       console.log("Error connecting to the server");
       console.log(err);
     }
+    setInProcess(false)
   };
 
   const signin = () => {
@@ -249,7 +257,7 @@ function SignIn() {
             <div className="w-full text-center">
               Have an account ?{" "}
               <a onClick={signin} className="cursor-pointer">
-                Sign in
+                {inProcess?<Spinner/>:"Sign in"}
               </a>
             </div>
           </form>

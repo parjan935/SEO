@@ -22,7 +22,7 @@ const userSchema = new mongoose.Schema({
     },
     subscription:{
         type:String,
-        enum:['Base','premium','premium plus'],
+        enum:['Base','Premium','Premium plus'],
         default:'Base'
     }
 });

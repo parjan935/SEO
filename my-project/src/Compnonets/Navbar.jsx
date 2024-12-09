@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, {createContext, useContext, useState, useEffect } from "react";
 import { Link, NavLink } from "react-router-dom";
 import logo from "../assets/LOGO.jpg";
 import SignIn from "./SignIn";
 import Profile from "./Profile";
 import Modal from "react-modal";
 
+
 const Navbar = ({ option, login }) => {
   const [isOpen, setIsOpen] = useState(true);
   const [menu, setmenu] = useState(false);
-  const [detailsVisible, setdetailsVisible] = useState(false);
 
   const token = localStorage.getItem("Token");
   const [userDetails, setUserDetails] = useState(null);
@@ -30,7 +30,7 @@ const Navbar = ({ option, login }) => {
         if (response.ok) {
           const result = await response.json();
           setUserDetails(result.user);
-          console.log(result);
+          // console.log(result);
         } else {
           const result = await response.json();
           alert(result.error || "Failed to fetch user details");
@@ -51,6 +51,7 @@ const Navbar = ({ option, login }) => {
   const openMenu = () => {
     setmenu(!menu);
   };
+
 
   return (
     <>
@@ -142,7 +143,6 @@ const Navbar = ({ option, login }) => {
             </Link>
           )}
         </div>
-        {/* </nav> */}
         {/* menu */}
         <div
           className={`flex justify-evenly mt-3 ${

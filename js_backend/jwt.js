@@ -10,7 +10,7 @@ const jwtMiddleware = (req,res,next)=>{
     try {
         //jwt token verification
         const response = jwt.verify(token,process.env.JWT_KEY);
-        console.log(response)
+        // console.log(response)
         req.user = response;
         next();
     } catch (err) {
@@ -21,5 +21,6 @@ const jwtMiddleware = (req,res,next)=>{
 //generating the token
 const gToken = (userData)=>{
     return jwt.sign(userData,process.env.JWT_KEY);
+    // return jwt.sign(userData,process.env.JWT_KEY,{expiresIn:"2h"});
 }
 module.exports= {jwtMiddleware,gToken};

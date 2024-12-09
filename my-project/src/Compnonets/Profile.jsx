@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { logout } from "../utils/TokenUtils";
 
 const Profile = ({ isOpen, onClose, userDetails }) => {
   const [isVisible, setIsVisible] = useState(isOpen);
@@ -21,7 +22,7 @@ const Profile = ({ isOpen, onClose, userDetails }) => {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem('Token')
+    logout();
     navigate("/signin"); 
   };
 

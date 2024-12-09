@@ -19,3 +19,9 @@
     animation: logo-spin infinite 20s linear;
   }
 }
+
+
+/* src/index.css or src/App.css */
+body {
+  @apply font-sans;
+}
