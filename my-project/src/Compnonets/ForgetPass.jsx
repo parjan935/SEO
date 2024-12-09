@@ -236,7 +236,6 @@ const ForgetPass = ({ isOpen, onClose }) => {
             className="mt-3 px-6 py-2 bg-blue-500 w-[200px] text-white rounded-md hover:bg-blue-600"
           >
             {inProcess?<Spinner/> :"Verify OTP"}
-            Verify OTP
           </button>
         </form>
         <form
@@ -284,7 +283,6 @@ const ForgetPass = ({ isOpen, onClose }) => {
             className="mt-3 px-6 py-2 bg-blue-500 w-[200px] text-white rounded-md hover:bg-blue-600"
           >
             {inProcess?<Spinner/> :"Save password"}
-            Save password
           </button>
         </form>
       </div>
