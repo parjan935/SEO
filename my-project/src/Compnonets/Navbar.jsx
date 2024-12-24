@@ -1,10 +1,9 @@
-import React, {createContext, useContext, useState, useEffect } from "react";
+import React, { createContext, useContext, useState, useEffect } from "react";
 import { Link, NavLink } from "react-router-dom";
 import logo from "../assets/LOGO.jpg";
 import SignIn from "./SignIn";
 import Profile from "./Profile";
 import Modal from "react-modal";
-
 
 const Navbar = ({ option, login }) => {
   const [isOpen, setIsOpen] = useState(true);
@@ -52,7 +51,6 @@ const Navbar = ({ option, login }) => {
     setmenu(!menu);
   };
 
-
   return (
     <>
       <nav className="bg-darkNavy fixed top-0 left-0 right-0 flex flex-col pt-3 z-10 shadow-[0px_4px_10px_rgba(0,0,0,0.5)]">
@@ -72,9 +70,11 @@ const Navbar = ({ option, login }) => {
                 alt="logo"
                 className={`h-[45px] md:h-[50px] w-auto pt-2 rounded-xl`}
               />
-              <div className="pl-2 text-2xl md:text-3xl font-bold text-white flex flex-col">
+              <div className="pl-2 text-xl md:text-2xl font-bold text-white flex flex-col">
                 SEO
-                <span className=" text-xs md:text-sm font-light">optimizer</span>
+                <span className=" text-xs md:text-sm font-light">
+                  optimizer
+                </span>
               </div>
             </div>
             <ul className="hidden md:flex">
@@ -82,40 +82,45 @@ const Navbar = ({ option, login }) => {
                 to="/"
                 className={({ isActive }) =>
                   isActive
-                    ? "text-white text-xl font-medium ml-10 hover:text-gray-400  border-b-2 border-white"
-                    : "text-white text-xl font-medium ml-10 hover:text-gray-400 border-b-2 border-b-navy2  "
+                    ? "text-white text-lg font-medium ml-10 hover:text-gray-400"
+                    : "text-gray-300 text-lg ml-10 hover:text-white "
                 }
               >
+                <i class="fa-solid fa-house mr-2 text-gray-400"></i>
                 Home
               </NavLink>
               <NavLink
                 to="/features"
                 className={({ isActive }) =>
                   isActive
-                    ? "text-white text-xl font-medium ml-10 hover:text-gray-400  border-b-2 border-white"
-                    : "text-white text-xl font-medium ml-10 hover:text-gray-400 border-b-2 border-b-navy2 "
+                    ? "text-white text-lg font-medium ml-10 hover:text-gray-400 "
+                    : "text-gray-300 text-lg  ml-10 hover:text-white "
                 }
               >
+                <i class="fa-solid fa-bolt mr-2 text-gray-400"></i>
                 Features
               </NavLink>
               <NavLink
                 to="/pricing"
                 className={({ isActive }) =>
                   isActive
-                    ? "text-white text-xl font-medium ml-10 hover:text-gray-400  border-b-2 border-white"
-                    : "text-white text-xl font-medium ml-10 hover:text-gray-400 border-b-2 border-b-navy2 "
+                    ? "text-white text-lg font-medium ml-10 hover:text-gray-400"
+                    : "text-gray-300 text-lg  ml-10 hover:text-white"
                 }
               >
+                {/* <i class="fa-solid fa-bolt mr-2 text-gray-400"></i> */}
+                <i class="fa-solid fa-dollar-sign mr-2 text-gray-400"></i>
                 Pricing
               </NavLink>
               <NavLink
                 to="/faq"
                 className={({ isActive }) =>
                   isActive
-                    ? "text-white text-xl font-medium ml-10 hover:text-gray-400  border-b-2 border-white"
-                    : "text-white text-xl font-medium ml-10 hover:text-gray-400 border-b-2 border-b-navy2"
+                    ? "text-white text-lg font-medium ml-10 hover:text-gray-400 "
+                    : "text-gray-300 text-lg  ml-10 hover:text-white "
                 }
               >
+                <i class="fa-solid fa-question mr-2 text-gray-400"></i>
                 FAQ
               </NavLink>
             </ul>
@@ -124,7 +129,7 @@ const Navbar = ({ option, login }) => {
             <div>
               <i
                 onClick={openModal}
-                className="fa-solid fa-user fa-2xl bg-white p-5 px-2 cursor-pointer rounded-full hover:bg-gray-300 mr-5"
+                className="fa-solid fa-user fa-2xl bg-white  p-4 px-2 cursor-pointer rounded-full hover:bg-gray-300 mr-5"
               ></i>
               <Profile
                 isOpen={isModalOpen}

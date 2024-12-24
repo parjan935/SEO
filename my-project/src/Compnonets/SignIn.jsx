@@ -9,6 +9,7 @@ import ForgetPass from "./ForgetPass";
 
 import {saveTokenToLocalStorage} from '../utils/TokenUtils'
 import Spinner from "./Spinner";
+import axios from "axios";
 
 function SignIn() {
   const [userName, setUserName] = useState("");
@@ -25,8 +26,8 @@ function SignIn() {
         throw new Error("No token found");
       }
 
-      const response =  await fetch("http://localhost:3000/user/profile", {
-        method: "GET",
+      const response =  await axios.get("http://localhost:3000/user/profile", {
+        // method: "GET",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`

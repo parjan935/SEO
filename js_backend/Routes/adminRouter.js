@@ -7,6 +7,7 @@ async function checkAdminRole(userId) {
     const user = await User.findById(userId);
     return user && user.role === 'admin';
 }
+
 router.post('/', jwtMiddleware, async (req, res) => {
     try {
         if (!await checkAdminRole(req.user.id)) {
@@ -22,16 +23,20 @@ router.post('/', jwtMiddleware, async (req, res) => {
         res.status(500).json({ error: 'Internal Server Error' });
     }
 });
-router.put('/:userid', jwtMiddleware, async (req, res) => {
+
+router.put('/:email', jwtMiddleware, async (req, res) => {
     try {
         if (!await checkAdminRole(req.user.id)) {
             return res.status(403).json({ message: "You must be an admin to perform this operation" });
         }
 
-        const userId = req.params.userid;
-        const data = req.body;
-        const response = await User.findByIdAndUpdate(userId, data, { new: true, runValidators: true });
+        const email = req.params.email;
+        const data = req.body.updateUser;
+        // console.log(email)
+        // console.log(data);
+        const response = await User.findOneAndUpdate({email}, data, { new: true, runValidators: true });
 
+        User.findOneAndUpdate()
         if (!response) {
             return res.status(404).json("User not found");
         }
@@ -43,14 +48,14 @@ router.put('/:userid', jwtMiddleware, async (req, res) => {
         res.status(500).json({ error: 'Internal Server Error' });
     }
 });
-router.delete('/:userid', jwtMiddleware, async (req, res) => {
+
+router.delete('/:email', jwtMiddleware, async (req, res) => {
     try {
         if (!await checkAdminRole(req.user.id)) {
             return res.status(403).json({ message: "You must be an admin to perform this operation" });
         }
-
-        const userId = req.params.userid;
-        const response = await User.findByIdAndDelete(userId);
+        const email = req.params.email;
+        const response = await User.findOneAndDelete({email});
 
         if (!response) {
             return res.status(404).json("User not found");
@@ -63,6 +68,7 @@ router.delete('/:userid', jwtMiddleware, async (req, res) => {
         res.status(500).json({ error: 'Internal Server Error' });
     }
 });
+
 router.get('/users',jwtMiddleware, async (req, res) => {
     try {
         if (!await checkAdminRole(req.user.id)) {
@@ -75,4 +81,5 @@ router.get('/users',jwtMiddleware, async (req, res) => {
         res.status(500).json({ error: 'Internal Server Error' });
     }
 });
+
 module.exports = router;

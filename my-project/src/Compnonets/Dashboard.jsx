@@ -7,39 +7,40 @@ import { useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function Dashboard() {
   const token = localStorage.getItem("Token");
-
-  const [warn,setwarn]=useState(false)
+  const [warn, setwarn] = useState(false);
   const navigate = useNavigate();
 
   const navtotry = () => {
     if (token) {
       navigate("/main");
-    }else{
-      // setwarn(true);
-      // setTimeout(()=>{
-      //   setwarn(false)
-      // },5000)
-      toast.warning("Please Login to access it...")
+    } else {
+      toast.warning("Please Login to access it...");
     }
   };
-
-
   return (
     <>
       <Navbar />
-      <div className="flex flex-col bg-darkNavy pt-20 h-fit min-h-screen">
+      <div className="flex flex-col bg-darkNavy2 pt-20 h-fit min-h-screen">
         <div className="flex-grow flex">
-          <div className="bg-darkNavy flex flex-row h-fit pt-8">
+          <div className="bg-darkNavy2 flex flex-row h-fit pt-8">
             <div className="flex flex-col pl-5 space-y-4 w-fit lg:w-3/4 xl:w-9/12">
-              <div className="text-yellow-400 text-lg ml-8">SEO optimizer</div>
-              <div className="text-center sm:text-left w-fit text-white  h-fit sm:w-2/5 mx-10 text-5xl sm:text-7xl md:text-8xl lg:text-7xl font-semi-bold xl:text-8xl">
-                AMAZINGLY <>SIMPLE</>
-              </div>
+              {/* <div className="text-yellow-400 text-lg ml-8">SEO optimizer</div> */}
+              <span
+                className="bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-cyan-700 to-cyan-900 text-left sm:text-left mx-10 mt-3 text-5xl sm:text-7xl md:text-8xl lg:text-7xl font-semibold xl:text-8xl"
+                style={{
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                  textShadow: "10px 30px 30px rgba(0, 0, 0, 0.5)", // Shadow cast on the ground
+                }}
+              >
+                AMAZINGLY SIMPLE
+              </span>
+
               <div className="text-white text-center sm:text-left text-base text-ce font-semibold mx-10 py-8 w-fit h-fit ">
                 SEO Optimizer with GENAI is a cutting-edge tool designed to
                 revolutionize search engine optimization by leveraging
@@ -53,29 +54,25 @@ function Dashboard() {
               <div className="flex flex-col items-center justify-center">
                 <div
                   onClick={navtotry}
-                  className={`px-10 py-2 ${warn?"mb-2":"mb-9"} h-fit w-fit bg-xoraTeal text-center text-4xl font-medium hover:opacity-80 rounded-lg cursor-pointer`}
+                  className={`px-10 py-2 mb-9 h-fit w-fit bg-cyan-500 text-center text-4xl font-medium hover:opacity-80 rounded-lg cursor-pointer`}
                 >
                   Try it
                 </div>
-                {/* <p className={`text-red-500 ${warn?"mb-1":"hidden"}`}>Please Login to access it......</p> */}
               </div>
             </div>
             {/* Dashboard Image */}
-            <div className="hidden lg:flex w-1/2 ml-48 mt-10">
+            <div className="hidden lg:flex w-1/2 mx-16 justify-center items-center">
               <div className="shadow-lg"></div>
-              <img
-                src={mainimg}
-                className="w-2/5 absolute right-[15px] top-24 h-[450px] bg-no-repeat bg-cover "
-              />
+              <video src="/mainimg.mp4" autoPlay loop muted className="" />
+              {/* <img src="/mainimg.gif" alt="Example GIF" /> */}
             </div>
           </div>
         </div>
         <Footer />
       </div>
-      <ToastContainer  position="top-center" autoClose={1000} limit={3} />
+      <ToastContainer position="top-center" autoClose={1000} limit={3} />
     </>
   );
 }
 
 export default Dashboard;
-

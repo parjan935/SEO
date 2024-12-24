@@ -6,11 +6,16 @@ export default {
   ],
   theme: {
     extend: {
+      boxShadow: {
+        'custom-360': '0 0 10px 1px rgba(0, 0, 0, 0.1)',
+      },
       fontFamily: {
         sans: ['quicksand', 'sans-serif'],  // Setting Quicksand as the default sans font
       },
       colors: {
+        darkNavy2: '#061022',
         darkNavy: '#0B1121',
+        lightNavy:"#0a0f1e",
         navy2:"#0B1122", // Custom dark background color
         xoraBlue: '#1F82E3', // Xora logo blue color
         xoraTeal: '#30D1C6', // Secondary Xora teal color

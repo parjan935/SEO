@@ -17,7 +17,7 @@ const Copy = ({ text }) => {
   };
 
   return (
-    <div className="flex pl-4 bg-gray-100 rounded-lg max-w-md space-x-5">
+    <div className="flex ml-4 bg-gray-400 rounded-lg max-w-md space-x-5">
       <div className="relative group">
         <button
           onClick={handleCopyText}

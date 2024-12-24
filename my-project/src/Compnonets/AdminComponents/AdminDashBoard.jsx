@@ -1,17 +1,15 @@
 import React, { useEffect, useState } from "react";
 import AdminNav from "./AdminNav";
+import axios from "axios";
+import Spinner from "../Spinner";
 
 const AdminDashBoard = () => {
   const token = localStorage.getItem("AdminToken");
   const [users, setUsers] = useState([]);
   const [selectedOption, setSelectedOption] = useState("All");
+  const [selecteduser, setSelectedUser] = useState(null);
 
-  const options = [
-    "All",
-    "Base",
-    "Premium",
-    "Premium plus",
-  ];
+  const options = ["All", "Base", "Premium", "Premium plus"];
   const [warn, setWarn] = useState("");
 
   const [searchData, setsearchData] = useState("");
@@ -23,9 +21,10 @@ const AdminDashBoard = () => {
 
   const filteredUsers =
     searchData != ""
-      ? AllUsers.filter((user) =>
-          user.userName.toLowerCase().includes(searchData.toLowerCase()) ||
-          user.email.toLowerCase().includes(searchData.toLowerCase())
+      ? AllUsers.filter(
+          (user) =>
+            user.userName.toLowerCase().includes(searchData.toLowerCase()) ||
+            user.email.toLowerCase().includes(searchData.toLowerCase())
         )
       : AllUsers;
 
@@ -43,7 +42,7 @@ const AdminDashBoard = () => {
           throw new Error(`Error! status: ${response.status}`);
         }
         const data = await response.json();
-        // console.log(data);
+        console.log(data);
         setUsers(data);
       } catch (err) {
         console.log("Error Fetching users:", err);
@@ -60,15 +59,80 @@ const AdminDashBoard = () => {
       </h1>
     );
 
+  const deleteUser = async () => {
+    const option = confirm(
+      `Are u sure u want to remove ${selecteduser.userName}`
+    );
+    if (option) {
+      try {
+        const response = await axios.delete(
+          `http://localhost:3000/admin/${selecteduser.email}`,
+          {
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        console.log(response);
+        alert("User removed successfully.");
+        window.location.reload();
+      } catch (error) {
+        console.log(error);
+        alert(error.error);
+      }
+    }
+  };
+
+  const removeSubs = async () => {
+    if (selecteduser.subscription === "Base") {
+      alert(`${selecteduser.userName} is already in Base plan`);
+      return;
+    }
+    const updateUser = {
+      userName: selecteduser.userName,
+      email: selecteduser.email,
+      subscription: "Base",
+    };
+    const option = confirm(
+      `${selecteduser.userName}'s subscription plan will be set to Base Plan.\n Are u sure about this operation?`
+    );
+    if (option) {
+      try {
+        const response = await axios.put(
+          `http://localhost:3000/admin/${selecteduser.email}`,
+          { updateUser },
+          {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        console.log(response);
+        alert("Users Subscrption is set to Base plan.");
+        window.location.reload();
+        alert(error.error);
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      alert("Operation cancelled.");
+    }
+  };
+
   return (
     <div>
       <AdminNav />
       <div className="bg-darkNavy  w-full min-h-screen pt-32 flex flex-col lg:flex-row">
         {/* Users Data  */}
-        <div className="text-xs md:text-md list-none h-fit lg:fixed px-0 mb-5 lg:w-[200px] lg:border-t-2 text-white  flex lg:flex-col justify-center">
-          {options.map((opt) => (
+        <div className="text-xs md:text-base list-none h-fit lg:fixed px-0 mb-5 lg:w-[200px] lg:border-t-2 text-white  flex lg:flex-col justify-center">
+          {options.map((opt, key) => (
             <li
-              className={`cursor-pointer  border-b-2 p-3 px-5 hover:bg-gray-400 hover:text-black ${
+              key={key}
+              className={`cursor-pointer  border-b-2 p-3  hover:bg-gray-400 hover:text-black ${
                 selectedOption == opt ? "bg-gray-400 text-black" : ""
               }`}
               onClick={(e) => setSelectedOption(opt)}
@@ -77,7 +141,7 @@ const AdminDashBoard = () => {
             </li>
           ))}
         </div>
-        <div className=" lg:ml-[200px] p-8 pt-0 h-fit w-full flex flex-col items-center mx-auto">
+        <div className=" lg:ml-[200px] p-8 pt-0 h-fit w-full flex flex-col items-center">
           <div className="bg-gray-400 sticky top-24 w-fit rounded-md mt-5">
             <input
               type="text"
@@ -92,37 +156,124 @@ const AdminDashBoard = () => {
             {`${selectedOption} Users`}
           </h1>
           <div className="w-full flex flex-wrap justify-center gap-6">
-            <table className="w-8/12 border-none bg-transparent text-white mb-20 mx-20 shadow-slate-800 shadow-[0px_0px_240px_rgba(1,1,1,100)] ">
+            <table className="lg:w-8/12 table table-striped table-hover">
               <thead>
-                <tr className="bg-blue-800 text-white">
-                  <th className=" border border-gray-700 px-4 py-2 text-left">
-                    Name
-                  </th>
-                  <th className="border border-gray-700 px-4 py-2 text-left">
-                    Email
-                  </th>
-                  <th className="border border-gray-700 px-4 py-2 text-left">
-                    Subscription
-                  </th>
+                <tr className="text-center">
+                  <th scope="col">userName</th>
+                  {/* <th scope="col">Email</th> */}
+                  <th scope="col">Subscription</th>
+                  {/* <th scope="col">Operations</th> */}
                 </tr>
               </thead>
               <tbody>
-                {filteredUsers.map((user) => (
-                  <tr key={user.id} className="hover:bg-gray-600">
-                    <td className="border border-gray-700 px-4 py-2">
-                      <i className="fa-solid  fa-user fa-2xl text-3xl mr-5"></i>
+                {filteredUsers.map((user, key) => (
+                  <tr
+                    key={key}
+                    className="hover:bg-gray-600 cursor-pointer"
+                    data-bs-toggle="modal"
+                    data-bs-target="#exampleModal"
+                    onClick={(e) => setSelectedUser(user)}
+                  >
+                    <td className="border border-gray-700 px-4 py-2 w-1/2">
+                      <i className="fa-solid fa-user fa-2xl text-3xl mr-5 "></i>
                       {user.userName}
                     </td>
-                    <td className="border border-gray-700 px-4 py-2 ">
+                    {/* <td className="border border-gray-700 px-4 py-2 w-1/2">
                       {user.email}
-                    </td>
+                    </td> */}
                     <td className="border border-gray-700 px-4 py-2">
                       {user.subscription}
                     </td>
+                    {/* <td>
+                      <div className="flex flex-wrap gap-2 justify-center">
+                        <button
+                          type="button"
+                          className="btn btn-secondary"
+                          onClick={removeSubs}
+                        >
+                          Remove subscription
+                        </button>
+                        <button
+                          type="button"
+                          className="btn btn-danger"
+                          onClick={deleteUser}
+                        >
+                          Delete user
+                        </button>
+                      </div>
+                    </td> */}
                   </tr>
                 ))}
               </tbody>
             </table>
+          </div>
+
+          <div
+            className="modal fade mt-40"
+            id="exampleModal"
+            tabIndex="-1"
+            aria-labelledby="exampleModalLabel"
+            aria-hidden="true"
+          >
+            <div className="modal-dialog w-[300px] lg:w-[400px]">
+              <div className="modal-content">
+                <div className="modal-header">
+                  <h1
+                    className="modal-title fs-5 font-bold"
+                    id="exampleModalLabel"
+                  >
+                    {selecteduser != null ? (
+                      <div>
+                        <i className="fa-solid  fa-user fa-2xl text-3xl mr-5"></i>
+                        {selecteduser.userName}
+                      </div>
+                    ) : (
+                      <Spinner />
+                    )}
+                  </h1>
+                  <button
+                    type="button"
+                    className="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  ></button>
+                </div>
+                <div className="modal-body ">
+                  {selecteduser != null ? (
+                    <div>
+                      <p>
+                        <span className="w-fit font-semibold">Email : </span>
+                        {selecteduser.email}
+                      </p>
+                      <p>
+                        <span className="w-fit font-semibold">
+                          Subscription :{" "}
+                        </span>
+                        {selecteduser.subscription}
+                      </p>
+                    </div>
+                  ) : (
+                    <Spinner />
+                  )}
+                </div>
+                <div className="flex flex-wrap gap-2 p-3 border-t-2 justify-end">
+                  <button
+                    type="button"
+                    className="btn btn-secondary"
+                    onClick={removeSubs}
+                  >
+                    Remove subscription
+                  </button>
+                  <button
+                    type="button"
+                    className="btn btn-danger"
+                    onClick={deleteUser}
+                  >
+                    Delete user
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -131,27 +282,3 @@ const AdminDashBoard = () => {
 };
 
 export default AdminDashBoard;
-
-// {filteredUsers.map((user, index) => (
-//   <div
-//     key={index}
-//     className={`${user.subscription=="premium"?"bg-blue-300":""}
-//      ${user.subscription == "premium plus" ? "bg-amber-500" : ""}
-//      ${user.subscription == "Base" ? "bg-gray-300" : ""}
-//       w-[300px] shadow-white rounded-lg p-4 border-none`}
-//   >
-
-//     <i className="fa-solid fa-user fa-2xl text-3xl"></i>
-//     <p className="text-lg font-semibold">
-//       <span className="font-bold text-gray-700">Name:</span>{" "}
-//       {user.userName}
-//     </p>
-//     <p className="text-gray-700">
-//       <span className="font-bold">Email:</span> {user.email}
-//     </p>
-//     <p className="text-gray-700">
-//       <span className="font-bold">Subscription:</span>{" "}
-//       {user.subscription}
-//     </p>
-//   </div>
-// ))}

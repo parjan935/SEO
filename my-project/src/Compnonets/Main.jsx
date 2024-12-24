@@ -135,7 +135,7 @@ const Main = () => {
         {(data && !process)&& (
           <div className="mt-3 text-white flex flex-col space-y-10 justify-center ">
             <div className="flex justify-center">
-              <div className="bg-gray-100 rounded-lg text-black shadow-[0px_0px_30px_rgba(0,0,0,0.5)] w-3/4  p-5 ">
+              <div className="bg-gray-400 rounded-lg text-black shadow-[0px_0px_30px_rgba(0,0,0,0.5)] w-3/4  p-5 ">
                 <h1 className=" flex justify-center text-3xl font-medium text-center">
                   Summary : <Copy text={data.Summary} />{" "}
                 </h1>
@@ -144,7 +144,7 @@ const Main = () => {
             </div>
             <div className="flex justify-center">
               <div
-                className="bg-gray-100 rounded-lg text-black shadow-[0px_0px_30px_rgba(0,0,0,0.5)] w-fit p-5 px-10 lg:px-32 
+                className="bg-gray-400 rounded-lg text-black shadow-[0px_0px_30px_rgba(0,0,0,0.5)] w-fit p-5 px-10 lg:px-32 
               text-left "
               >
                 <h1 className="flex justify-center text-3xl font-medium text-center">
@@ -158,7 +158,7 @@ const Main = () => {
               </div>
             </div>
             <div className="flex flex-col space-y-10 space-x-0 md:flex-row md:space-x-10 md:space-y-0 text-white justify-center mx-auto">
-              <div className="bg-gray-100 rounded-lg text-black shadow-[0px_0px_30px_rgba(0,0,0,0.5)] w-fit text-left p-10 pt-0">
+              <div className="bg-gray-400 rounded-lg text-black shadow-[0px_0px_30px_rgba(0,0,0,0.5)] w-fit text-left p-10 pt-0">
                 <h1 className="flex justify-center text-3xl font-medium text-center py-5">
                   Keywords : <Copy text={data.Keywords} />
                 </h1>
@@ -168,7 +168,7 @@ const Main = () => {
                   ))}
                 </p>
               </div>
-              <div className="bg-gray-100 rounded-lg text-black shadow-[0px_0px_30px_rgba(0,0,0,0.5)] w-fit text-left p-10 pt-0">
+              <div className="bg-gray-400 rounded-lg text-black shadow-[0px_0px_30px_rgba(0,0,0,0.5)] w-fit text-left p-10 pt-0">
                 <h1 className="flex justify-center text-3xl font-medium text-center py-5">
                   Hashtags : <Copy text={data.Hashtags} />
                 </h1>
