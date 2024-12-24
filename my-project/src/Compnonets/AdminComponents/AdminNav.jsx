@@ -3,12 +3,13 @@ import React from "react";
 import logo from "../../assets/LOGO.jpg";
 import { useNavigate } from "react-router-dom";
 import { NavLink, Link } from "react-router-dom";
+import {logout} from '../../utils/TokenUtils'
 
 const AdminNav = () => {
   const navigate = useNavigate();
   const handleLogout = () => {
     // e.preventDefault();
-    localStorage.removeItem("AdminToken");
+    logout("AdminToken");
     navigate("/signin");
   };
 

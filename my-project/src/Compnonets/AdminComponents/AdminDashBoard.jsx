@@ -2,8 +2,10 @@ import React, { useEffect, useState } from "react";
 import AdminNav from "./AdminNav";
 import axios from "axios";
 import Spinner from "../Spinner";
+import { useNavigate } from "react-router-dom";
 
 const AdminDashBoard = () => {
+  const navigate=useNavigate();
   const token = localStorage.getItem("AdminToken");
   const [users, setUsers] = useState([]);
   const [selectedOption, setSelectedOption] = useState("All");
@@ -52,12 +54,10 @@ const AdminDashBoard = () => {
     fetchUsers();
   }, [token]);
 
-  if (!token)
-    return (
-      <h1>
-        Session Logged out. <br /> Please Login again.
-      </h1>
-    );
+  if (!token){
+    navigate('/signin')
+  }
+    
 
   const deleteUser = async () => {
     const option = confirm(

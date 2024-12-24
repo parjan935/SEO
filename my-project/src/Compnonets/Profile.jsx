@@ -22,7 +22,7 @@ const Profile = ({ isOpen, onClose, userDetails }) => {
   };
 
   const handleLogout = () => {
-    logout();
+    logout("Token");
     navigate("/signin"); 
   };
 
