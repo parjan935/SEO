@@ -52,10 +52,19 @@ const AdminDashBoard = () => {
     };
 
     fetchUsers();
-  }, [token]);
+  }, []);
 
   if (!token){
-    navigate('/signin')
+    const LoginAgain=()=>{
+      navigate('/signin')
+    }
+    return(
+      <div className="flex flex-col justify-center items-center mt-5">
+      <h1>Session logged out!</h1>
+      <button className="text-white bg-black rounded-lg px-4 py-2 font-medium mt-3
+            text-base md:text-lg mx-7 hover:bg-white hover:text-black duration-300 flex justify-center items-center" onClick={LoginAgain}>Login Again</button>
+      </div>
+    )
   }
     
 
