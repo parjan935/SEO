@@ -5,15 +5,14 @@ const User = require("../models/user");
 const { jwtMiddleware, gToken } = require("../jwt");
 
 const bodyParser = require("body-parser");
-
+//stripe key for the payment gateway
 const stripe = require("stripe")(
   "sk_test_51OyWGwSDlwM9qquDSuATkRTE8jEBu0kfNR9G69E2ukJ5tanuoorbLIKJRVRx3SXrBpHVZWUlgbC6ZcLmuYCOORGA00odlfGerI"
 );
-
 router.use(bodyParser.json());
 
 require("dotenv").config();
-
+//function to validate password
 const validatePassword = (password) => {
   if (
     password.length < 8 ||
@@ -26,7 +25,7 @@ const validatePassword = (password) => {
   return true;
 };
 
-// Signup
+// signup route
 router.post("/signup", async (req, res) => {
   try {
     const data = req.body;
@@ -75,7 +74,7 @@ router.post("/signup", async (req, res) => {
   }
 });
 
-// login
+// login route
 router.post("/login", async (req, res) => {
   try {
     const { userName, password } = req.body;
@@ -94,7 +93,7 @@ router.post("/login", async (req, res) => {
   }
 });
 
-// Profile route
+// profile route
 router.get("/profile", jwtMiddleware, async (req, res) => {
   try {
     const userData = req.user;
@@ -109,7 +108,7 @@ router.get("/profile", jwtMiddleware, async (req, res) => {
 });
 
 let otpStore = {};
-
+//function to send mail
 const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
@@ -118,7 +117,7 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-// Send OTP
+// sends otp
 router.post("/request-otp", async (req, res) => {
   const { name } = req.body.body;
   console.log(req.body);
@@ -154,7 +153,7 @@ router.post("/request-otp", async (req, res) => {
   });
 });
 
-// Verify OTP
+// Verifies otp
 router.post("/verify-otp", async (req, res) => {
   const { name, otp } = req.body.body;
   const user = await User.findOne({ userName: name });
@@ -210,7 +209,7 @@ router.put("/updatePlan", jwtMiddleware, async (req, res) => {
   const {updatedPlan}=req.body
   // console.log(updatedPlan);
   
-  const user=await User.findByIdAndUpdate(userData.id,{subscription:updatedPlan})
+  const user=await User.findByIdAndUpdate(userData.id,{subscription:updatedPlan}) //updates subscription by finding the id
   if(!user){
     return res.status(401).send({message:"User not found"})
   }
