@@ -24,22 +24,37 @@ This project is dedicated to enhancing Search Engine Optimization (SEO) strategi
 3. **Install dependencies**:
    - For Python components:
      ```bash
+     cd backendmain
      pip install -r requirements.txt
      ```
    - For JavaScript components:
      ```bash
+     cd js_backend
      npm install
+   
      ```
+4. **Add dotenv file**;
+   ```
+   GOOGLE_API_KEY=<YOUR_API_KEY>
+   YOUTUBE_DATA_API=<YOUR_API_KEY>
+   ```
 
 ## Usage
 
 1. **Start the application**:
    - For the backend:
      ```bash
+     cd backendmain
      python app.py
+     ```
+   - For server:
+     ```
+     cd js_backend
+     npm start
      ```
    - For the frontend:
      ```bash
+     cd my-project
      npm start
      ```
 2. **Access the application**:
@@ -65,10 +80,14 @@ We welcome contributions! Please follow these steps:
    ```
 6. **Create a Pull Request**.
 
-## License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
 ## Contact
 
-For any inquiries or feedback, please contact [parjan935](https://github.com/parjan935).
+For any inquiries or feedback, please contact
+[Parjan](https://github.com/parjan935),
+[Ambhikesh](https://github.com/Ambhikesh9) 
+[Shireesh](https://github.com/Shireeshsk),
+[Siddharth](https://github.com/Sidhudupati),
+[Sanjay](https://github.com/sannjaay),
+[Uday](https://github.com/Uday8897).
+
