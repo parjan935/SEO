@@ -56,7 +56,7 @@ const AdminNav = () => {
               >
                 Users
               </NavLink>
-              <NavLink
+              {/* <NavLink
                 to="/admin/activity"
                 className={({ isActive }) =>
                   isActive
@@ -65,7 +65,7 @@ const AdminNav = () => {
                 }
               >
                 Activity
-              </NavLink>
+              </NavLink> */}
             </ul>
           </div>
           <div>
@@ -93,11 +93,11 @@ const AdminNav = () => {
               Users
             </div>
           </Link>
-          <Link to="/admin/activity">
+          {/* <Link to="/admin/activity">
             <div className={`${menu?"pl-3 py-2":""} text-white text-xl font-medium py-1.5 hover:bg-black duration-300 ease-in-out `}>
               Activity
             </div>
-          </Link>
+          </Link> */}
         </div>
       </nav>
     </>
