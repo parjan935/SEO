@@ -24,10 +24,12 @@ This project is dedicated to enhancing Search Engine Optimization (SEO) strategi
 3. **Install dependencies**:
    - For Python components:
      ```bash
+     cd backendmain
      pip install -r requirements.txt
      ```
    - For JavaScript components:
      ```bash
+     cd js_backend
      npm install
      ```
 
@@ -36,10 +38,16 @@ This project is dedicated to enhancing Search Engine Optimization (SEO) strategi
 1. **Start the application**:
    - For the backend:
      ```bash
+     cd backendmain
      python app.py
+     ```
+     ```
+     cd js_backend
+     npm start
      ```
    - For the frontend:
      ```bash
+     cd my-project
      npm start
      ```
 2. **Access the application**:
