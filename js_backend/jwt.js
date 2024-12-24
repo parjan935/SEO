@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
-
+//jwt middleware for authorization
 const jwtMiddleware = (req,res,next)=>{
     const header = req.headers.authorization;
     if(!header)return res.status(401).json({error:"Token not found"})
