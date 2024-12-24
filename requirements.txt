@@ -1,0 +1,12 @@
+flask 
+python-dotenv 
+whisper 
+google-generativeai 
+soundfile 
+Flask-Cors 
+logging
+requests
+json
+io
+os 
+subprocess
