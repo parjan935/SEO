@@ -31,7 +31,13 @@ This project is dedicated to enhancing Search Engine Optimization (SEO) strategi
      ```bash
      cd js_backend
      npm install
+   
      ```
+4. **Add dotenv file**;
+   ```
+   GOOGLE_API_KEY=<YOUR_API_KEY>
+   YOUTUBE_DATA_API=<YOUR_API_KEY>
+   ```
 
 ## Usage
 
@@ -41,7 +47,7 @@ This project is dedicated to enhancing Search Engine Optimization (SEO) strategi
      cd backendmain
      python app.py
      ```
-   -For server:
+   - For server:
      ```
      cd js_backend
      npm start
