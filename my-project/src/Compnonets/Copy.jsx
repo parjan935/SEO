@@ -1,39 +1,43 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 const Copy = ({ text }) => {
   const [copySuccess, setCopySuccess] = useState(false);
 
-  const textToCopy = text;
-
   const handleCopyText = () => {
-    navigator.clipboard.writeText(textToCopy).then(
+    navigator.clipboard.writeText(text).then(
       () => {
         setCopySuccess(true);
-        // Reset after 10 seconds to allow multiple copies
         setTimeout(() => setCopySuccess(false), 3000);
       },
       () => alert("Failed to copy text!")
     );
   };
 
-  return (
-    <div className="flex ml-4 bg-gray-400 rounded-lg max-w-md space-x-5">
-      <div className="relative group">
-        <button
-          onClick={handleCopyText}
-          className="bg-white hover:bg-black active:bg-gray-500 text-white font-bold rounded"
-        >
-          <i
-            className={`fa-solid ${
-              copySuccess ? "fa-circle-check" : "fa-clone"
-            } fa-xs text-black hover:text-white px-2 py-5 `}
-          ></i>
-        </button>
+  useEffect(() => {
+    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+    const tooltipList = [...tooltipTriggerList].map(
+      (tooltipTriggerEl) => new bootstrap.Tooltip(tooltipTriggerEl)
+    );
 
-        <div className="absolute w-fit left-1/4 transform -translate-x-1/3 mt-0 p-2 bg-gray-700 text-white text-sm rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 ">
-          {copySuccess ? "Text copied!" : "Copy text !"}
-        </div>
-      </div>
+    return () => tooltipList.forEach((tooltip) => tooltip.dispose());
+  }, [copySuccess]);
+
+  return (
+    <div className="flex ml-4 py-0 bg-gray-400 rounded-lg max-w-md space-x-5">
+      <button
+        type="button"
+        className="btn btn-secondary"
+        data-bs-toggle="tooltip"
+        data-bs-placement="top"
+        title={copySuccess ? "Text copied!" : "Copy text!"}
+        onClick={handleCopyText}
+      >
+        <i
+          className={`fa-solid ${
+            copySuccess ? "fa-circle-check" : "fa-clipboard"
+          } fa-lg text-black hover:text-white px-0 py-2`}
+        ></i>
+      </button>
     </div>
   );
 };

@@ -54,7 +54,7 @@ router.post("/signup", async (req, res) => {
       return res.status(409).json({ error: "Invalid password!" });
     }
 
-    res.status(200).json({ response: "Details verified successfully" });
+    // res.status(200).json({ response: "Details verified successfully" });
 
     const newUser = new User(data);
     const response = await newUser.save();

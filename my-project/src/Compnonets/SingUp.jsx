@@ -101,7 +101,7 @@ function SignIn() {
         notifyLogin("Registration Successfull!");
         // localStorage.setItem("Token", result.token);
         saveTokenToLocalStorage('Token',result.token); 
-        getUser();
+        // getUser();
         setTimeout(() => {
           navigate("/");
         }, 1000);
@@ -161,9 +161,9 @@ function SignIn() {
   return (
     <div className="flex flex-col max-h-screen">
       <Navbar option="signup" />
-      <div className="bg-darkNavy pt-20 h-screen flex items-center justify-center ">
+      <div className="bg-darkNavy pt-20 md:pt-40 flex items-center justify-center h-screen ">
         {/* registratiom */}
-        {optsent ? (
+        {/* {optsent ? (
           <form
             className="w-[450px] text-white flex flex-col shadow-slate-800 shadow-[0px_0px_240px_rgba(1,1,1,100)] bg-navy2 p-4 rounded-2xl space-y-5 py-8 px-8 md:-mt-20"
             onSubmit={validateOTP}
@@ -191,11 +191,12 @@ function SignIn() {
             </button>
           </form>
         ) : (
+        )} */}
           <form
-            className="w-[380px] md:w-[450px] text-white flex flex-col shadow-slate-800 shadow-[0px_0px_240px_rgba(1,1,1,100)] bg-navy2 p-4 rounded-2xl space-y-5 py-8 px-8 md:-mt-20"
+            className="w-[380px] md:w-[450px] text-white flex flex-col shadow-slate-800 shadow-[0px_0px_240px_rgba(1,1,1,100)] bg-navy2 rounded-2xl space-y-5 py-8 px-8 md:-mt-20"
             onSubmit={handleSubmit}
           >
-            <h1 className="text-5xl text-white  font-bold text-center">
+            <h1 className="text-3xl md:text-5xl text-white  font-bold text-center">
               Register
             </h1>
             <div className="flex flex-col space-y-2">
@@ -247,7 +248,7 @@ function SignIn() {
               />
             </div>
 
-            <p className="text-red-500 text-center m-0 text-sm">{message}</p>
+            <p className="text-red-500 text-center m-0 mt-3 text-sm">{message}</p>
             <button
               type="submit"
               className="bg-blue-500 text-white py-2 px-4 rounded-md shadow-md hover:bg-blue-600 transition-colors "
@@ -261,7 +262,7 @@ function SignIn() {
               </a>
             </div>
           </form>
-        )}
+        
       </div>
       <ToastContainer position="top-center" autoClose={1000} limit={3} />
     </div>

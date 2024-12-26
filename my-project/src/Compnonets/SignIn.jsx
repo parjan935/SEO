@@ -67,7 +67,7 @@ function SignIn() {
           toast.success("Login Successfull!");
           setUserName("")
           setPassword("")
-          getUser();
+          // getUser();
           if(userName==="Admin"){
             // localStorage.setItem('AdminToken',result.token)
             saveTokenToLocalStorage('AdminToken',result.token); 
@@ -117,12 +117,13 @@ function SignIn() {
   return (
     <div className="flex flex-col max-h-screen">
       <Navbar option="signin" />
-      <div className="flex bg-darkNavy items-center justify-center h-screen ">
+      <div className="flex bg-darkNavy pt-20 items-center justify-center h-screen ">
           <form
-            className="w-[350px] md:w-[450px] text-white flex flex-col shadow-slate-800 shadow-[0px_0px_240px_rgba(1,1,1,100)] bg-navy2 p-4 rounded-2xl space-y-5 py-8 px-8"
-            onSubmit={handleSubmit}
+            className="w-[350px] md:w-[450px] text-white flex flex-col shadow-slate-800 
+            shadow-[0px_0px_240px_rgba(1,1,1,100)] bg-navy2 rounded-2xl space-y-5 py-8 px-10"
+            onSubmit={handleSubmit} 
           >
-            <h1 className="text-5xl text-white  font-bold text-center">
+            <h1 className=" text-3xl md:text-5xl text-white  font-bold text-center">
               Sign in
             </h1>
             <div className="flex flex-col space-y-2">
@@ -161,7 +162,8 @@ function SignIn() {
             {message!=""?<p className="text-red-500 text-center m-0 text-sm">{message}</p>:""}
 
             <div>
-              <p onClick={openForgetpass} className="hover:underline cursor-pointer w-fit text-blue-400 text-sm m-0 mx-auto">forgot password ?</p>
+              <p onClick={openForgetpass} className="hover:underline cursor-pointer w-fit
+               text-blue-400 text-sm m-0 mx-auto">forgot password ?</p>
               <ForgetPass isOpen={isModalOpen} onClose={closeForgetpass} />
             </div>
             <button
