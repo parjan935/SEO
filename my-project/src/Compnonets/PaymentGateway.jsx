@@ -38,7 +38,6 @@ const PaymentGateway = ({ isOpen, onClose, amt }) => {
     });
     console.log(payment_result);
 
-    // Call stripe.confirmCardPayment to confirm the PaymentIntent
     const card_result = await stripe.confirmCardPayment(clientSecret, {
       payment_method: {
         card: elements.getElement(CardElement),
@@ -52,8 +51,8 @@ const PaymentGateway = ({ isOpen, onClose, amt }) => {
 
     if (payment_result.error) {
       console.error(payment_result.error.message);
-      // alert(payment_result.error.message);
-      toast.success(payment_result.error.message);
+      alert(payment_result.error.message);
+      // toast.warning(payment_result.error.message);
     } else {
       try {
         console.log("updating plan..");
@@ -72,11 +71,7 @@ const PaymentGateway = ({ isOpen, onClose, amt }) => {
       } catch (error) {
         console.log(error);
       }
-      // console.log(`Payment of ${amt} successful`);
-      toast.success(`Payment of ${amt} successful`);
-      // alert(`Payment of ${amt} successful`);
-
-      ///// Clear the card details after successful payment
+      toast.success(`Payment of ${amt}$ successful`);
       elements.getElement(CardElement).clear();
     }
   };
@@ -91,10 +86,9 @@ const PaymentGateway = ({ isOpen, onClose, amt }) => {
 
   return (
     <div
-      className={`fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center duration-300 ${
+      className={`fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center duration-300  z-1000 ${
         isOpen ? "opacity-100" : "opacity-0"
       }`}
-      onClick={handleOverlayClick}
     >
       <div className="max-w-full w-[450px] mx-auto mt-10 p-6 bg-gray-200 shadow-lg rounded-lg">
         <div className="text-end">
@@ -118,7 +112,7 @@ const PaymentGateway = ({ isOpen, onClose, amt }) => {
           </button>
         </form>
       </div>
-      <ToastContainer position="bottom-right" autoClose={1000} limit={3} />
+      <ToastContainer position="top-right" autoClose={1000} limit={3} style={{ top: "100px" }} />
     </div>
   );
 };

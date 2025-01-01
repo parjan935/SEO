@@ -39,8 +39,8 @@ const Faq = () => {
           <h1 className="text-white min-w-screen text-center sm:text-4xl text-xl  mb-5 px-auto py-2">
             How to use ?
           </h1>
-          <video className="w-[400px] sm:w-[500px] md:w-[640px]" width="" height="360" controls>
-            <source src="./src/videos/large.mp4" type="video/mp4" />
+          <video className="" width="500" height="360" controls>
+            <source src="./src/videos/How_to_use.mp4" type="video/mp4" />
             Your browser does not support the video tag.
           </video>
         </div>
