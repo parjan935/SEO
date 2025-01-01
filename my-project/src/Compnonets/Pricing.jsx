@@ -40,18 +40,22 @@ function Pricing() {
       <div className="bg-darkNavy flex flex-col lg:flex-row lg:h-screen lg:pt-0 pt-40 items-center justify-center space-y-20 lg:space-x-10 lg:space-y-0 pb-10">
         {/* General Plan */}
         <div className="flex flex-col text-white h-[450px] w-[300px] rounded-lg text-2xl bg-blue-500 hover:scale-110 duration-500 ease-in-out z-0 p-5 px-7">
-          <h1 className="text-5xl w-fit m-auto">Base Plan</h1>
+          <h1 className="text-4xl w-fit m-auto">Base Plan</h1>
           <div className="flex flex-col flex-grow space-y-6 py-10">
             <div className="flex space-x-2">
-              <i className="fa-solid fa-check my-2"></i>
-              <span>Video Acceptance range: up to 30 min</span>
+              <i className="fa-solid fa-check text-base"></i>
+              <span className="text-base">Video Acceptance range: up to 10 min</span>
             </div>
             <div className="flex space-x-2">
-              <i className="fa-solid fa-check my-2"></i>
-              <span>Fast response</span>
+              <i className="fa-solid fa-check text-base"></i>
+              <span className="text-base">Normal processing speed</span>
+            </div>
+            <div className="flex space-x-2">
+              <i className="fa-solid fa-check text-base"></i>
+              <span className="text-base">Perfect for beginners</span>
             </div>
           </div>
-          <div className="text-center mb-10">
+          <div className="text-center mb-10 ">
             <button
               className="bg-gold text-black rounded-lg p-3 px-8 text-center m-auto hover:bg-green-500 duration-500 ease-in-out"
               // onClick={() => openPayment(0)} // Free Plan Amount
@@ -62,17 +66,21 @@ function Pricing() {
         </div>
 
         {/* Premium Plus Plan */}
-        <div className="flex flex-col text-white h-[500px] w-[330px] rounded-lg bg-blue-700 text-2xl hover:scale-110 duration-300 ease-in-out z-0  p-5 px-7">
-          <h1 className="text-5xl w-fit m-auto">Premium</h1>
-          <h1 className="text-5xl w-fit m-auto">Plus</h1>
+        <div className="flex flex-col text-white h-[500px] w-[320px] rounded-lg bg-blue-700 text-2xl hover:scale-110 duration-300 ease-in-out z-10  p-5 px-7">
+          <h1 className="text-4xl w-fit m-auto">Premium</h1>
+          <h1 className="text-4xl w-fit m-auto">Plus</h1>
           <div className="flex flex-col flex-grow space-y-6 py-10">
             <div className="flex space-x-2">
-              <i className="fa-solid fa-check my-2"></i>
-              <span>Video Acceptance range: more than 60 min</span>
+              <i className="fa-solid fa-check text-base"></i>
+              <span className="text-base">Video Acceptance range: more than 20 min</span>
             </div>
             <div className="flex space-x-2">
-              <i className="fa-solid fa-check my-2"></i>
-              <span>Fastest response</span>
+              <i className="fa-solid fa-check text-base"></i>
+              <span className="text-base">Faster Processing Speed</span>
+            </div>
+            <div className="flex space-x-2">
+              <i className="fa-solid fa-check text-base"></i>
+              <span className="text-base">Optimized for professionals</span>
             </div>
           </div>
           <div className="text-center mb-10">
@@ -87,15 +95,19 @@ function Pricing() {
 
         {/* Premium Plan */}
         <div className="flex flex-col text-white h-[450px] w-[300px] rounded-lg bg-blue-500 text-2xl hover:scale-110 duration-300 ease-in-out z-0 p-5 px-7">
-          <h1 className="text-5xl w-fit m-auto">Premium</h1>
+          <h1 className="text-4xl w-fit m-auto">Premium</h1>
           <div className="flex flex-col flex-grow space-y-6 py-10">
             <div className="flex space-x-2">
-              <i className="fa-solid fa-check my-2"></i>
-              <span>Video Acceptance range: up to 60 min</span>
+              <i className="fa-solid fa-check text-base"></i>
+              <span className="text-base">Video Acceptance range: up to 20 min</span>
             </div>
             <div className="flex space-x-2">
-              <i className="fa-solid fa-check my-2"></i>
-              <span>Faster response</span>
+              <i className="fa-solid fa-check text-base"></i>
+              <span className="text-base">Standared Processing Speed</span>
+            </div>
+            <div className="flex space-x-2">
+              <i className="fa-solid fa-check text-base"></i>
+              <span className="text-base">Great for content creators</span>
             </div>
           </div>
           <div className="text-center mb-10">
